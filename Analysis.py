@@ -88,7 +88,7 @@ Risk Ranges Tool
 """)
 # Sidebar Header
 
-Falcon = Image.open("/Users/derekcentineo/Analytics/Risk_Ranges_Beta/Falcon.jpeg")
+Falcon = Image.open("/Users/derekcentineo/Documents/GitHub/Analytics/Falcon.jpeg")
 st.sidebar.image(Falcon, use_column_width=False)
 st.sidebar.header('User Input')
 
