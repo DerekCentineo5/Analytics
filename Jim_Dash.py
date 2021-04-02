@@ -10,10 +10,6 @@ from plotly.subplots import make_subplots
 from ta.volatility import average_true_range
 from pandas_ta.overlap import vwma
 from pandas_ta.overlap import wma
-#from zipline.api import order_target, symbol, order, order_percent, order_target_percent
-#from zipline.data import bundles
-#from zipline.utils.calendars import get_calendar
-#from zipline import run_algorithm
 import pandas_datareader as pdr 
 import ta
 import numpy as np
@@ -100,55 +96,58 @@ def get_input():
 
     start_date = st.sidebar.text_input("Start Date", "2018-01-01")
     end_date = st.sidebar.text_input("End Date", dt.datetime.today().strftime("%Y-%m-%d"))
-    stock_symbol = st.sidebar.text_input("Yahoo Finance Symbol", "QQQ")
+    index = st.sidebar.selectbox("Indexes or Portfolio", ("Global Indexes", "Macrowise Portfolio", "Crypto"))
     volume_weighted = st.sidebar.selectbox("Volume Weigthed", (True, False))
     trade_period = st.sidebar.slider("Trade Period", min_value=2, max_value=21,value=10, step=1)
     trend_period = st.sidebar.slider("Trend Period", min_value=60, max_value=130,value=63, step=1)
 
-    return start_date, end_date, stock_symbol, volume_weighted, trade_period, trend_period
+    return start_date, end_date, index, volume_weighted, trade_period, trend_period
 
-def get_data(symbol, Start, End):
+def get_data(symbol, Start, End, Trade, Trend, VW):
 
-    Data = yf.download(symbol, start=Start, end=End)
+    Global_Indexes = ['^GSPC', '^IXIC', '^RUT', '^GSPTSE','^STOXX50E', '^GDAXI','^N225', '^HSI']
+    Macrowise = ['ADI', 'ASML', 'TSM', 'ERIC','NOK','EA','ILMN','INTC','MCHP','COST','MELI','SLV', 'QGEN','EWT','SWKS', 'TXN', 'MSFT', 'CCJ', 'GLD', 'XBI', 'PYPL', 'SQ']
+    Crypto = ['BTC-USD', 'ETH-USD', 'DOT1-USD', 'LINK-USD', 'KSM-USD', 'XRP-USD', 'ATOM1-USD', 'ADA-USD']
 
+    if symbol=="Global Indexes":
+        Data = {}
+        for i in Global_Indexes:
+            Data[i] = pd.DataFrame(yf.download(i, start=Start, end=End))
+        for i, df in Data.items():
+            Data[i] = pd.DataFrame(RiskRange(Price_Data=df, window=Trade, length=Trend, volume_weighted=VW, vol_window=Trade))
+
+    elif symbol=="Macrowise Portfolio":
+        Data = {}
+        for i in Macrowise:
+            Data[i] = pd.DataFrame(yf.download(i, start=Start, end=End))
+        for  i, df in Data.items():
+            Data[i] = pd.DataFrame(RiskRange(Price_Data=df, window=Trade, length=Trend, volume_weighted=VW, vol_window=Trade))
+        
+    elif symbol=="Crypto":
+        Data = {}
+        for i in Crypto:
+            Data[i] = pd.DataFrame(yf.download(i, start=Start, end=End))
+        for i, df in Data.items():
+            Data[i] = pd.DataFrame(RiskRange(Price_Data=df, window=Trade, length=Trend, volume_weighted=VW, vol_window=Trade)[:-1])
+            
     return Data
 
 #Get Data
-start, end, symbol, vw, trade, trend = get_input()
+start, end, index, vw, trade, trend = get_input()
 
-Data = get_data(symbol=symbol, Start=start, End=end)
+Data = get_data(symbol=index, Start=start, End=end, Trade=trade, Trend=trend, VW=vw)
 
 #Calculate Risk Ranges
-RR = RiskRange(Price_Data=Data, window=trade, length=trend, volume_weighted=vw, vol_window=trade)
-
+  
 ############################################################ Display ############################################################
 
-Company_Name = yf.Ticker(symbol).info['shortName']
+#Company_Name = yf.Ticker(symbol).info['shortName']
 
-st.header(Company_Name +" Risk Ranges\n")
+#st.header(Company_Name +" Risk Ranges\n")
 
-fig = go.Figure(data=go.Scatter(x=RR.index, y=RR['Trend'], name="Trend"))
+st.header(" Risk Ranges")
 
-fig.add_trace(go.Scatter(x=RR.index, y=RR['Bottom RR'], name='Bottom Risk Range'))
-
-fig.add_trace(go.Scatter(x=RR.index, y=RR['Top RR'], name='Top Risk Range'))
-
-fig.add_trace(go.Candlestick(x=Data.index,open=Data['Open'], high=Data['High'], low=Data['Low'], close=Data['Close'], name=(symbol +" Price\n")))
-
-fig.update_layout(
-    autosize=False,
-    width=700,
-    height=400, margin=dict(l=0, r=10, t=58, b=0), 
-    legend=dict(orientation="h",yanchor="bottom",y=1,xanchor="left",x=0))
-
-st.plotly_chart(fig, use_container_width=False)
-
-st.write(RR)
-
-#Symbols = ['PYPL','SQ', 'FINX', 'ARKF','XLK']
-
-#for i in Symbols:
-    #Prices = pdr.get_data_yahoo(i,start='2020-08-01', end='2021-03-29')
-    #RR = RiskRange(Prices,window=10, length=63, volume_weighted=True, vol_window=10)
-    #RR
+for i, df in Data.items():
+    st.subheader(i)
+    st.dataframe(df[-2:])
 
