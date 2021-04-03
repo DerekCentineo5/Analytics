@@ -88,7 +88,7 @@ Risk Ranges Tool
 """)
 # Sidebar Header
 
-Falcon = Image.open("/Users/derekcentineo/Documents/GitHub/Analytics/Falcon.jpeg")
+Falcon = Image.open("Falcon.jpeg")
 st.sidebar.image(Falcon, use_column_width=False)
 st.sidebar.header('User Input')
 
@@ -144,11 +144,4 @@ fig.update_layout(
 st.plotly_chart(fig, use_container_width=False)
 
 st.write(RR)
-
-#Symbols = ['PYPL','SQ', 'FINX', 'ARKF','XLK']
-
-#for i in Symbols:
-    #Prices = pdr.get_data_yahoo(i,start='2020-08-01', end='2021-03-29')
-    #RR = RiskRange(Prices,window=10, length=63, volume_weighted=True, vol_window=10)
-    #RR
 
