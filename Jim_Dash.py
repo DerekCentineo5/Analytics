@@ -76,78 +76,82 @@ def RiskRange(Price_Data, window=10, length=63, volume_weighted=True, vol_window
     
     return Output
 
-# Title and Image
+### For Multi-Tab!!!!!
 
-st.write("""
-# **Falcon Management Dashboard**
-Risk Ranges Tool
-""")
-# Sidebar Header
+def app():
 
-Falcon = Image.open("Falcon.jpeg")
-st.sidebar.image(Falcon, use_column_width=False)
-st.sidebar.header('User Input')
+    # Title and Image
 
-# Get User Input
+    st.write("""
+    # **Falcon Management Dashboard**
+    Risk Ranges Tool
+    """)
+    # Sidebar Header
 
-#### MAYBE ADD IN SOURCE OPTION?????
+    Falcon = Image.open("Falcon.jpeg")
+    st.sidebar.image(Falcon, use_column_width=False)
+    st.sidebar.header('User Input')
 
-def get_input():
+    # Get User Input
 
-    start_date = st.sidebar.text_input("Start Date", "2018-01-01")
-    end_date = st.sidebar.text_input("End Date", dt.datetime.today().strftime("%Y-%m-%d"))
-    index = st.sidebar.selectbox("Indexes or Portfolio", ("Global Indexes", "Macrowise Portfolio", "Crypto"))
-    volume_weighted = st.sidebar.selectbox("Volume Weigthed", (True, False))
-    trade_period = st.sidebar.slider("Trade Period", min_value=2, max_value=21,value=10, step=1)
-    trend_period = st.sidebar.slider("Trend Period", min_value=60, max_value=130,value=63, step=1)
+    #### MAYBE ADD IN SOURCE OPTION?????
 
-    return start_date, end_date, index, volume_weighted, trade_period, trend_period
+    def get_input():
 
-def get_data(symbol, Start, End, Trade, Trend, VW):
+        start_date = st.sidebar.text_input("Start Date", "2018-01-01")
+        end_date = st.sidebar.text_input("End Date", dt.datetime.today().strftime("%Y-%m-%d"))
+        index = st.sidebar.selectbox("Indexes or Portfolio", ("Global Indexes", "Macrowise Portfolio", "Crypto"))
+        volume_weighted = st.sidebar.selectbox("Volume Weigthed", (True, False))
+        trade_period = st.sidebar.slider("Trade Period", min_value=2, max_value=21,value=10, step=1)
+        trend_period = st.sidebar.slider("Trend Period", min_value=60, max_value=130,value=63, step=1)
 
-    Global_Indexes = ['^GSPC', '^IXIC', '^RUT', '^GSPTSE','^STOXX50E', '^GDAXI','^N225', '^HSI']
-    Macrowise = ['ADI', 'ASML', 'TSM', 'ERIC','NOK','EA','ILMN','INTC','MCHP','COST','MELI','SLV', 'QGEN','EWT','SWKS', 'TXN', 'MSFT', 'CCJ', 'GLD', 'XBI', 'PYPL', 'SQ']
-    Crypto = ['BTC-USD', 'ETH-USD', 'DOT1-USD', 'LINK-USD', 'KSM-USD', 'XRP-USD', 'ATOM1-USD', 'ADA-USD']
+        return start_date, end_date, index, volume_weighted, trade_period, trend_period
 
-    if symbol=="Global Indexes":
-        Data = {}
-        for i in Global_Indexes:
-            Data[i] = pd.DataFrame(yf.download(i, start=Start, end=End))
-        for i, df in Data.items():
-            Data[i] = pd.DataFrame(RiskRange(Price_Data=df, window=Trade, length=Trend, volume_weighted=VW, vol_window=Trade))
+    def get_data(symbol, Start, End, Trade, Trend, VW):
 
-    elif symbol=="Macrowise Portfolio":
-        Data = {}
-        for i in Macrowise:
-            Data[i] = pd.DataFrame(yf.download(i, start=Start, end=End))
-        for  i, df in Data.items():
-            Data[i] = pd.DataFrame(RiskRange(Price_Data=df, window=Trade, length=Trend, volume_weighted=VW, vol_window=Trade))
-        
-    elif symbol=="Crypto":
-        Data = {}
-        for i in Crypto:
-            Data[i] = pd.DataFrame(yf.download(i, start=Start, end=End))
-        for i, df in Data.items():
-            Data[i] = pd.DataFrame(RiskRange(Price_Data=df, window=Trade, length=Trend, volume_weighted=VW, vol_window=Trade)[:-1])
+        Global_Indexes = ['^GSPC', '^IXIC', '^RUT', '^GSPTSE','^STOXX50E', '^GDAXI','^N225', '^HSI']
+        Macrowise = ['ADI', 'ASML', 'TSM', 'ERIC','NOK','EA','ILMN','INTC','MCHP','COST','MELI','SLV', 'QGEN','EWT','SWKS', 'TXN', 'MSFT', 'CCJ', 'GLD', 'XBI', 'PYPL', 'SQ']
+        Crypto = ['BTC-USD', 'ETH-USD', 'DOT1-USD', 'LINK-USD', 'KSM-USD', 'XRP-USD', 'ATOM1-USD', 'ADA-USD']
+
+        if symbol=="Global Indexes":
+            Data = {}
+            for i in Global_Indexes:
+                Data[i] = pd.DataFrame(yf.download(i, start=Start, end=End))
+            for i, df in Data.items():
+                Data[i] = pd.DataFrame(RiskRange(Price_Data=df, window=Trade, length=Trend, volume_weighted=VW, vol_window=Trade))
+
+        elif symbol=="Macrowise Portfolio":
+            Data = {}
+            for i in Macrowise:
+                Data[i] = pd.DataFrame(yf.download(i, start=Start, end=End))
+            for  i, df in Data.items():
+                Data[i] = pd.DataFrame(RiskRange(Price_Data=df, window=Trade, length=Trend, volume_weighted=VW, vol_window=Trade))
             
-    return Data
+        elif symbol=="Crypto":
+            Data = {}
+            for i in Crypto:
+                Data[i] = pd.DataFrame(yf.download(i, start=Start, end=End))
+            for i, df in Data.items():
+                Data[i] = pd.DataFrame(RiskRange(Price_Data=df, window=Trade, length=Trend, volume_weighted=VW, vol_window=Trade)[:-1])
+                
+        return Data
 
-#Get Data
-start, end, index, vw, trade, trend = get_input()
+    #Get Data
+    start, end, index, vw, trade, trend = get_input()
 
-Data = get_data(symbol=index, Start=start, End=end, Trade=trade, Trend=trend, VW=vw)
+    Data = get_data(symbol=index, Start=start, End=end, Trade=trade, Trend=trend, VW=vw)
 
-#Calculate Risk Ranges
-  
-############################################################ Display ############################################################
+    #Calculate Risk Ranges
+    
+    ############################################################ Display ############################################################
 
-#Company_Name = yf.Ticker(symbol).info['shortName']
+    #Company_Name = yf.Ticker(symbol).info['shortName']
 
-#st.header(Company_Name +" Risk Ranges\n")
+    #st.header(Company_Name +" Risk Ranges\n")
 
-st.header(" Risk Ranges")
+    st.header(" Risk Ranges")
 
-for i, df in Data.items():
-    st.subheader(i)
-    st.dataframe(df[-1:])
+    for i, df in Data.items():
+        st.subheader(i)
+        st.dataframe(df[-1:])
 

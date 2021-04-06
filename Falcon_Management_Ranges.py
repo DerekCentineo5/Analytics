@@ -80,68 +80,72 @@ def RiskRange(Price_Data, window=10, length=63, volume_weighted=True, vol_window
     
     return Output
 
-# Title and Image
+### For Multi-Tab!!!!!
 
-st.write("""
-# **Falcon Management Dashboard**
-Risk Ranges Tool
-""")
-# Sidebar Header
+def app():
 
-Falcon = Image.open("Falcon.jpeg")
-st.sidebar.image(Falcon, use_column_width=False)
-st.sidebar.header('User Input')
+    # Title and Image
 
-# Get User Input
+    st.write("""
+    # **Falcon Management Dashboard**
+    Risk Ranges Tool
+    """)
+    # Sidebar Header
 
-#### MAYBE ADD IN SOURCE OPTION?????
+    Falcon = Image.open("Falcon.jpeg")
+    st.sidebar.image(Falcon, use_column_width=False)
+    st.sidebar.header('User Input')
 
-def get_input():
+    # Get User Input
 
-    start_date = st.sidebar.text_input("Start Date", "2018-01-01")
-    end_date = st.sidebar.text_input("End Date", dt.datetime.today().strftime("%Y-%m-%d"))
-    stock_symbol = st.sidebar.text_input("Yahoo Finance Symbol", "QQQ")
-    volume_weighted = st.sidebar.selectbox("Volume Weigthed", (True, False))
-    trade_period = st.sidebar.slider("Trade Period", min_value=2, max_value=21,value=10, step=1)
-    trend_period = st.sidebar.slider("Trend Period", min_value=60, max_value=130,value=63, step=1)
+    #### MAYBE ADD IN SOURCE OPTION?????
 
-    return start_date, end_date, stock_symbol, volume_weighted, trade_period, trend_period
+    def get_input():
 
-def get_data(symbol, Start, End):
+        start_date = st.sidebar.text_input("Start Date", "2018-01-01")
+        end_date = st.sidebar.text_input("End Date", dt.datetime.today().strftime("%Y-%m-%d"))
+        stock_symbol = st.sidebar.text_input("Yahoo Finance Symbol", "QQQ")
+        volume_weighted = st.sidebar.selectbox("Volume Weigthed", (True, False))
+        trade_period = st.sidebar.slider("Trade Period", min_value=2, max_value=21,value=10, step=1)
+        trend_period = st.sidebar.slider("Trend Period", min_value=60, max_value=130,value=63, step=1)
 
-    Data = yf.download(symbol, start=Start, end=End)
+        return start_date, end_date, stock_symbol, volume_weighted, trade_period, trend_period
 
-    return Data
+    def get_data(symbol, Start, End):
 
-#Get Data
-start, end, symbol, vw, trade, trend = get_input()
+        Data = yf.download(symbol, start=Start, end=End)
 
-Data = get_data(symbol=symbol, Start=start, End=end)
+        return Data
 
-#Calculate Risk Ranges
-RR = RiskRange(Price_Data=Data, window=trade, length=trend, volume_weighted=vw, vol_window=trade)
+    #Get Data
+    start, end, symbol, vw, trade, trend = get_input()
 
-############################################################ Display ############################################################
+    Data = get_data(symbol=symbol, Start=start, End=end)
 
-Company_Name = yf.Ticker(symbol).info['shortName']
+    #Calculate Risk Ranges
+    RR = RiskRange(Price_Data=Data, window=trade, length=trend, volume_weighted=vw, vol_window=trade)
 
-st.header(Company_Name +" Risk Ranges\n")
+    ############################################################ Display ############################################################
 
-fig = go.Figure(data=go.Scatter(x=RR.index, y=RR['Trend'], name="Trend"))
+    Company_Name = yf.Ticker(symbol).info['shortName']
 
-fig.add_trace(go.Scatter(x=RR.index, y=RR['Bottom RR'], name='Bottom Risk Range'))
+    st.header(Company_Name +" Risk Ranges\n")
 
-fig.add_trace(go.Scatter(x=RR.index, y=RR['Top RR'], name='Top Risk Range'))
+    fig = go.Figure(data=go.Scatter(x=RR.index, y=RR['Trend'], name="Trend"))
 
-fig.add_trace(go.Candlestick(x=Data.index,open=Data['Open'], high=Data['High'], low=Data['Low'], close=Data['Close'], name=(symbol +" Price\n")))
+    fig.add_trace(go.Scatter(x=RR.index, y=RR['Bottom RR'], name='Bottom Risk Range'))
 
-fig.update_layout(
-    autosize=False,
-    width=700,
-    height=400, margin=dict(l=0, r=10, t=58, b=0), 
-    legend=dict(orientation="h",yanchor="bottom",y=1,xanchor="left",x=0))
+    fig.add_trace(go.Scatter(x=RR.index, y=RR['Top RR'], name='Top Risk Range'))
 
-st.plotly_chart(fig, use_container_width=False)
+    fig.add_trace(go.Candlestick(x=Data.index,open=Data['Open'], high=Data['High'], low=Data['Low'], close=Data['Close'], name=(symbol +" Price\n")))
 
-st.write(RR)
+    fig.update_layout(
+        autosize=False,
+        width=700,
+        height=400, margin=dict(l=0, r=10, t=58, b=0), 
+        legend=dict(orientation="h",yanchor="bottom",y=1,xanchor="left",x=0))
+
+    st.plotly_chart(fig, use_container_width=False)
+
+    st.write(RR)
 
