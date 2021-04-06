@@ -149,5 +149,5 @@ st.header(" Risk Ranges")
 
 for i, df in Data.items():
     st.subheader(i)
-    st.dataframe(df[-2:])
+    st.dataframe(df[-1:])
 
