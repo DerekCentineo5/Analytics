@@ -11,6 +11,8 @@ PAGES = {
     "Risk Ranges Analysis": Falcon_Management_Ranges
 }
 
+Falcon = Image.open("Falcon.jpeg")
+st.sidebar.image(Falcon, use_column_width=False)
 st.sidebar.title('Dashboard Navigation')
 selection = st.sidebar.radio("Go to", list(PAGES.keys()))
 page = PAGES[selection]

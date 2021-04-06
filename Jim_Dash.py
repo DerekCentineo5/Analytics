@@ -88,8 +88,6 @@ def app():
     """)
     # Sidebar Header
 
-    Falcon = Image.open("Falcon.jpeg")
-    st.sidebar.image(Falcon, use_column_width=False)
     st.sidebar.header('User Input')
 
     # Get User Input

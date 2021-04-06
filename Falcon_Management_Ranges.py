@@ -90,13 +90,10 @@ def app():
     # **Falcon Management Dashboard**
     Risk Ranges Tool
     """)
-    # Sidebar Header
-
-    Falcon = Image.open("Falcon.jpeg")
-    st.sidebar.image(Falcon, use_column_width=False)
-    st.sidebar.header('User Input')
 
     # Get User Input
+
+    st.sidebar.header('User Input')
 
     #### MAYBE ADD IN SOURCE OPTION?????
 
