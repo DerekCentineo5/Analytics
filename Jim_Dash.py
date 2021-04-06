@@ -138,7 +138,7 @@ def app():
     start, end, index, vw, trade, trend = get_input()
 
     Data = get_data(symbol=index, Start=start, End=end, Trade=trade, Trend=trend, VW=vw)
-    RR_DataFrame = pd.DataFrame(Data, index=Data.keys())
+    RR_DataFrame = pd.DataFrame(Data, index_col=Data.keys())
 
     st.table(RR_DataFrame)
 
