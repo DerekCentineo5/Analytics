@@ -171,4 +171,4 @@ def app():
 
     st.header(" Risk Ranges")
 
-    st.dataframe(Data,width=100, height=200)
+    st.dataframe(Data,width=50, height=50)
