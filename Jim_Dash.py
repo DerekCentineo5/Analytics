@@ -170,4 +170,4 @@ def app():
 
     st.header(" Risk Ranges")
 
-    st.dataframe(Data)
+    st.write(Data)
