@@ -123,7 +123,7 @@ def app():
                 #Data[i].set_index('Asset')
                 New_Data = New_Data.append(Data[i], ignore_index=True)
                 Final = New_Data.set_index('Asset')
-                Final = Final[['Price', 'Trend', 'Bottom RR', 'Top RR','Mid RR']]
+                Matrix = Final[['Price', 'Trend', 'Bottom RR', 'Top RR','Mid RR']]
 
         elif symbol=="Macrowise Portfolio":
             Data = {}
@@ -137,7 +137,7 @@ def app():
                 #Data[i].set_index('Asset')
                 New_Data = New_Data.append(Data[i], ignore_index=True)
                 Final = New_Data.set_index('Asset')
-                Final = Final[['Price', 'Trend', 'Bottom RR', 'Top RR','Mid RR']]
+                Matrix = Final[['Price', 'Trend', 'Bottom RR', 'Top RR','Mid RR']]
             
         elif symbol=="Crypto":
             Data = {}
@@ -151,9 +151,9 @@ def app():
                 #Data[i].set_index('Asset')
                 New_Data = New_Data.append(Data[i], ignore_index=True)
                 Final = New_Data.set_index('Asset')
-                Final = Final[['Price', 'Trend', 'Bottom RR', 'Top RR','Mid RR']]
+                Matrix = Final[['Price', 'Trend', 'Bottom RR', 'Top RR','Mid RR']]
                 
-        return Final
+        return Matrix
 
     #Get Data
     start, end, index, vw, trade, trend = get_input()
