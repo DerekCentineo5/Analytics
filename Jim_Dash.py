@@ -107,40 +107,58 @@ def app():
 
     def get_data(symbol, Start, End, Trade, Trend, VW):
 
-        Global_Indexes = ['^GSPC', '^IXIC', '^RUT', '^GSPTSE','^STOXX50E', '^GDAXI','^N225', '^HSI']
+        Global_Indices = ['^GSPC', '^IXIC', '^RUT', '^GSPTSE','^STOXX50E', '^GDAXI','^N225', '^HSI']
         Macrowise = ['ADI', 'ASML', 'TSM', 'ERIC','NOK','EA','ILMN','INTC','MCHP','COST','MELI','SLV', 'QGEN','EWT','SWKS', 'TXN', 'MSFT', 'CCJ', 'GLD', 'XBI', 'PYPL', 'SQ']
         Crypto = ['BTC-USD', 'ETH-USD', 'DOT1-USD', 'LINK-USD', 'KSM-USD', 'XRP-USD', 'ATOM1-USD', 'ADA-USD']
 
-        if symbol=="Global Indexes":
+        if symbol=="Global Indices":
             Data = {}
-            for i in Global_Indexes:
-                Data[i] = pd.DataFrame(yf.download(i, start=Start, end=End))
-            for i, df in Data.items():
+            New_Data = pd.DataFrame()
+            for i in Global_Indices:
+                Data[i] = pd.DataFrame(yf.download(i, start=Start,end=End))
+            for  i, df in Data.items():
                 Data[i] = pd.DataFrame(RiskRange(Price_Data=df, window=Trade, length=Trend, volume_weighted=VW, vol_window=Trade))
+                Data[i] = pd.DataFrame(Data[i])[-1:]
+                Data[i].insert(1, 'Asset', i)
+                #Data[i].set_index('Asset')
+                New_Data = New_Data.append(Data[i], ignore_index=True)
+                Final = New_Data.set_index('Asset')
+                Final = Final[['Price', 'Trend', 'Bottom RR', 'Top RR','Mid RR']]
 
         elif symbol=="Macrowise Portfolio":
             Data = {}
+            New_Data = pd.DataFrame()
             for i in Macrowise:
-                Data[i] = pd.DataFrame(yf.download(i, start=Start, end=End))
+                Data[i] = pd.DataFrame(yf.download(i, start=Start,end=End))
             for  i, df in Data.items():
                 Data[i] = pd.DataFrame(RiskRange(Price_Data=df, window=Trade, length=Trend, volume_weighted=VW, vol_window=Trade))
+                Data[i] = pd.DataFrame(Data[i])[-1:]
+                Data[i].insert(1, 'Asset', i)
+                #Data[i].set_index('Asset')
+                New_Data = New_Data.append(Data[i], ignore_index=True)
+                Final = New_Data.set_index('Asset')
+                Final = Final[['Price', 'Trend', 'Bottom RR', 'Top RR','Mid RR']]
             
         elif symbol=="Crypto":
             Data = {}
+            New_Data = pd.DataFrame()
             for i in Crypto:
-                Data[i] = pd.DataFrame(yf.download(i, start=Start, end=End))
-            for i, df in Data.items():
-                Data[i] = pd.DataFrame(RiskRange(Price_Data=df, window=Trade, length=Trend, volume_weighted=VW, vol_window=Trade)[:-1])
+                Data[i] = pd.DataFrame(yf.download(i, start=Start,end=End))
+            for  i, df in Data.items():
+                Data[i] = pd.DataFrame(RiskRange(Price_Data=df, window=Trade, length=Trend, volume_weighted=VW, vol_window=Trade))
+                Data[i] = pd.DataFrame(Data[i])[-1:]
+                Data[i].insert(1, 'Asset', i)
+                #Data[i].set_index('Asset')
+                New_Data = New_Data.append(Data[i], ignore_index=True)
+                Final = New_Data.set_index('Asset')
+                Final = Final[['Price', 'Trend', 'Bottom RR', 'Top RR','Mid RR']]
                 
-        return Data
+        return Final
 
     #Get Data
     start, end, index, vw, trade, trend = get_input()
 
     Data = get_data(symbol=index, Start=start, End=end, Trade=trade, Trend=trend, VW=vw)
-    RR_DataFrame = pd.DataFrame(Data, index_col=Data.keys())
-
-    st.table(RR_DataFrame)
 
     #Calculate Risk Ranges
     
@@ -152,7 +170,4 @@ def app():
 
     st.header(" Risk Ranges")
 
-    for i, df in Data.items():
-        st.subheader(i)
-        st.dataframe(df[-1:])
-
+    st.dataframe(Data)
