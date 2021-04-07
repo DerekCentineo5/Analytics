@@ -159,6 +159,7 @@ def app():
     start, end, index, vw, trade, trend = get_input()
 
     Data = get_data(symbol=index, Start=start, End=end, Trade=trade, Trend=trend, VW=vw)
+    Data
 
     #Calculate Risk Ranges
     
