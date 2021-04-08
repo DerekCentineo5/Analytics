@@ -110,7 +110,7 @@ def app():
         Global_Indices = ['^GSPC', '^IXIC', '^RUT', '^GSPTSE', '^BVSP','^STOXX50E', '^GDAXI','^N225','^HSI','^AXJO']
         Macrowise = ['ADI', 'ASML', 'TSM', 'ERIC','NOK','EA','ILMN','INTC','MCHP','COST','MELI','SLV', 'QGEN','EWT','SWKS', 'TXN', 'MSFT', 'CCJ', 'GLD', 'XBI', 'PYPL', 'SQ']
         Crypto = ['BTC-USD', 'ETH-USD', 'DOT1-USD', 'LINK-USD', 'KSM-USD', 'XRP-USD', 'ATOM1-USD', 'ADA-USD']
-        Country_ETF = ['SPY','EWC', 'EWW','EWZ', 'ECH', 'EWI','DAX','EWN', 'EWU', 'GREK','TURK','EZA','RSX','INDA','FXI','EWJ','EWY','EWM','EWT','EWA']
+        Country_ETF = ['SPY','EWC', 'EWW','EWZ', 'ECH', 'EWI','DAX','EWN', 'EWU', 'GREK','TUR','EZA','RSX','INDA','FXI','EWJ','EWY','EWM','EWT','EWA']
 
 
         if symbol=="Global Indices":
