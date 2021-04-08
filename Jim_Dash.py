@@ -99,7 +99,7 @@ def app():
         start_date = st.sidebar.text_input("Start Date", "2018-01-01")
         end_date = st.sidebar.text_input("End Date", (dt.datetime.today() + dt.timedelta(days=1)).strftime("%Y-%m-%d"))
         index = st.sidebar.selectbox("Indexes or Portfolio", ("Global Indices", "US Sectors","Macrowise Portfolio", "Crypto", "Country ETFs"))
-        volume_weighted = st.sidebar.selectbox("Volume Weigthed", (True, False))
+        volume_weighted = st.sidebar.selectbox("Volume Weighted", (True, False))
         trade_period = st.sidebar.slider("Trade Period", min_value=2, max_value=21,value=10, step=1)
         trend_period = st.sidebar.slider("Trend Period", min_value=60, max_value=130,value=63, step=1)
 

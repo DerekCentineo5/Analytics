@@ -7,3 +7,4 @@ pandas_ta==0.2.45b0
 yfinance==0.1.59
 pandas==1.2.3
 Pillow==8.1.2
+psaw==0.1.0
