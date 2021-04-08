@@ -98,7 +98,7 @@ def app():
 
         start_date = st.sidebar.text_input("Start Date", "2018-01-01")
         end_date = st.sidebar.text_input("End Date", (dt.datetime.today() + dt.timedelta(days=1)).strftime("%Y-%m-%d"))
-        index = st.sidebar.selectbox("Indexes or Portfolio", ("Global Indices", "Macrowise Portfolio", "Crypto", "Country ETFs"))
+        index = st.sidebar.selectbox("Indexes or Portfolio", ("Global Indices", "US Sectors","Macrowise Portfolio", "Crypto", "Country ETFs"))
         volume_weighted = st.sidebar.selectbox("Volume Weigthed", (True, False))
         trade_period = st.sidebar.slider("Trade Period", min_value=2, max_value=21,value=10, step=1)
         trend_period = st.sidebar.slider("Trend Period", min_value=60, max_value=130,value=63, step=1)
@@ -108,6 +108,7 @@ def app():
     def get_data(symbol, Start, End, Trade, Trend, VW):
 
         Global_Indices = ['^GSPC', '^IXIC', '^RUT', '^GSPTSE', '^BVSP','^STOXX50E', '^GDAXI','^N225','^HSI','^AXJO']
+        US_Sectors = ['XLK','XLP','XLY','XRT','XLI','XLV','XBI','XLB','XLE','XLF','XLC','XLU']
         Macrowise = ['ADI', 'ASML', 'TSM', 'ERIC','NOK','EA','ILMN','INTC','MCHP','COST','MELI','SLV', 'QGEN','EWT','SWKS', 'TXN', 'MSFT', 'CCJ', 'GLD', 'XBI', 'PYPL', 'SQ']
         Crypto = ['BTC-USD', 'ETH-USD', 'DOT1-USD', 'LINK-USD', 'KSM-USD', 'XRP-USD', 'ATOM1-USD', 'ADA-USD']
         Country_ETF = ['SPY','EWC', 'EWW','EWZ', 'ECH', 'EWI','DAX','EWN', 'EWU', 'GREK','TUR','EZA','RSX','INDA','FXI','EWJ','EWY','EWM','EWT','EWA']
@@ -127,6 +128,20 @@ def app():
                 Final = New_Data.set_index('Asset')
                 Matrix = Final[['Price', 'Trend', 'Bottom RR', 'Top RR','Mid RR']]
 
+        elif symbol=="US Sectors":
+            Data = {}
+            New_Data = pd.DataFrame()
+            for i in US_Sectors:
+                Data[i] = pd.DataFrame(yf.download(i, start=Start,end=End))
+            for  i, df in Data.items():
+                Data[i] = pd.DataFrame(RiskRange(Price_Data=df, window=Trade, length=Trend, volume_weighted=VW, vol_window=Trade))
+                Data[i] = pd.DataFrame(Data[i])[-1:]
+                Data[i].insert(1, 'Asset', i)
+                #Data[i].set_index('Asset')
+                New_Data = New_Data.append(Data[i], ignore_index=True)
+                Final = New_Data.set_index('Asset')
+                Matrix = Final[['Price', 'Trend', 'Bottom RR', 'Top RR','Mid RR']]
+        
         elif symbol=="Macrowise Portfolio":
             Data = {}
             New_Data = pd.DataFrame()
