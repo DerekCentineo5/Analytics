@@ -1,5 +1,6 @@
 from portfoliolab.online_portfolio_selection import *
 from PIL import Image
+import portfoliolab
 import pandas as pd
 import streamlit as st
 import datetime as dt
