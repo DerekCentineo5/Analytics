@@ -4,5 +4,6 @@ plotly>=4.0.0
 streamlit
 pandas_ta
 yfinance
+cvxpy
 pandas
 portfoliolab==0.2.0
