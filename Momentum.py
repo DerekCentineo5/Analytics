@@ -1,4 +1,4 @@
-from portfoliolab.online_portfolio_selection import *
+from portfoliolab.online_portfolio_selection import EG
 from PIL import Image
 import pandas as pd
 import streamlit as st
