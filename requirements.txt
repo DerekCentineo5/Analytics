@@ -1,10 +1,8 @@
 numpy
 ta==0.7.0
-plotly==4.14.3
+plotly
 streamlit==0.79.0
 pandas_ta
 yfinance
 pandas
-Pillow==8.1.2
-psaw==0.1.0
-portfoliolab==0.1.0
+portfoliolab
