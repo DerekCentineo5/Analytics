@@ -5,5 +5,4 @@ streamlit
 pandas_ta
 yfinance
 cvxpy>=1.1.10
-pandas
-portfoliolab.online_portfolio_selection
+portfoliolab
