@@ -5,4 +5,4 @@ streamlit
 pandas_ta
 yfinance
 pandas
-portfoliolab==0.2.0
+portfoliolab
