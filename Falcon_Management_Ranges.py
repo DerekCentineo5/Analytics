@@ -14,7 +14,6 @@ from pandas_ta.overlap import wma
 #from zipline.data import bundles
 #from zipline.utils.calendars import get_calendar
 #from zipline import run_algorithm
-import pandas_datareader as pdr 
 import ta
 import numpy as np
 

@@ -10,7 +10,6 @@ from plotly.subplots import make_subplots
 from ta.volatility import average_true_range
 from pandas_ta.overlap import vwma
 from pandas_ta.overlap import wma
-import pandas_datareader as pdr 
 import ta
 import numpy as np
 
