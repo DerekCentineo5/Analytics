@@ -1,7 +1,8 @@
-numpy==1.18.5
+numpy
 ta
 plotly
 streamlit
 pandas_ta
 yfinance
 pandas
+portfoliolab==0.1.0
