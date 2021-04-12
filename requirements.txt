@@ -1,4 +1,4 @@
-numpy>=1.18.0
+numpy
 ta
 plotly>=4.0.0
 streamlit
@@ -6,4 +6,4 @@ pandas_ta
 yfinance
 cvxpy==1.1.12
 pandas
-portfoliolab==0.2.0
+portfoliolab
