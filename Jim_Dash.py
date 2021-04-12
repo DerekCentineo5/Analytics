@@ -200,6 +200,6 @@ def app():
 
     #st.header(Company_Name +" Risk Ranges\n")
 
-    st.header(" Risk Ranges")
+    st.header("Risk Ranges")
 
     st.dataframe(Data)
