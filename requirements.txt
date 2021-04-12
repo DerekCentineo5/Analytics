@@ -6,3 +6,4 @@ pandas_ta
 yfinance
 pandas
 portfoliolab
+numpy.core.multiarray
