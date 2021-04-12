@@ -1,11 +1,10 @@
-pandas_datareader==0.9.0
 numpy==1.20.1
 ta==0.7.0
 plotly==4.14.3
 streamlit==0.79.0
-pandas_ta==0.2.45b0
-yfinance==0.1.59
-pandas==1.2.3
+pandas_ta
+yfinance
+pandas
 Pillow==8.1.2
 psaw==0.1.0
 portfoliolab==0.1.0
