@@ -5,4 +5,3 @@ streamlit
 pandas_ta
 yfinance
 portfoliolab
-cvxpy==1.1.12
