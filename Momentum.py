@@ -1,6 +1,5 @@
 from portfoliolab.online_portfolio_selection import EG
 from PIL import Image
-import numpy.core.multiarray
 import pandas as pd
 import streamlit as st
 import datetime as dt
