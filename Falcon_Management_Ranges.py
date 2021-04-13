@@ -15,6 +15,7 @@ from pandas_ta.overlap import wma
 #from zipline.utils.calendars import get_calendar
 #from zipline import run_algorithm
 import ta
+import portfoliolab
 import numpy as np
 
 def RiskRange(Price_Data, window=10, length=63, volume_weighted=True, vol_window=5, mindiff=100000000.0, maxdiff=-100000000.0):
