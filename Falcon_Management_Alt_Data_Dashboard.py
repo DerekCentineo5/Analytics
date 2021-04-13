@@ -2,7 +2,6 @@ import os
 #import Momentum
 import Jim_Dash
 import Falcon_Management_Ranges
-import numpy.core.multiarray
 import streamlit as st
 from PIL import Image
 
