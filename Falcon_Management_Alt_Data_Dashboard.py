@@ -1,14 +1,16 @@
 import os
-import Momentum
+import sys
 import Jim_Dash
 import Falcon_Management_Ranges
 import streamlit as st
 from PIL import Image
+sys.path.insert(0, '/Users/derekcentineo/Documents/GitHub/Momentum')
+import Main_Momentum
 
 PAGES = {
     "Daily Ranges": Jim_Dash,
     "Risk Ranges Analysis": Falcon_Management_Ranges,
-    "Momentum": Momentum
+    "Momentum": Main_Momentum
 }
 
 Falcon = Image.open("Falcon.jpeg")
