@@ -1,7 +1,6 @@
 import os
 import sys
 import Jim_Dash
-import psycopg2
 #import Reddit_Screener
 import Falcon_Management_Ranges
 import streamlit as st
