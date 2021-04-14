@@ -9,7 +9,7 @@ from PIL import Image
 PAGES = {
     #"Momentum": Mom,
     "Daily Ranges": Jim_Dash,
-    "Risk Ranges Analysis": Falcon_Management_Ranges
+    "Risk Ranges Analysis": Falcon_Management_Ranges,
     "Social Media Sentiment": Reddit_Screener
 }
 
