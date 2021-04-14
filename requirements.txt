@@ -4,4 +4,5 @@ plotly>=4.0.0
 streamlit
 pandas_ta
 yfinance
+sys.path.insert(0, '/Users/derekcentineo/Documents/GitHub/Momentum')
 Main_Momentum
