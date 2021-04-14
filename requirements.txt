@@ -4,4 +4,4 @@ plotly>=4.0.0
 streamlit
 pandas_ta
 yfinance
-portfoliolab==0.1.0
+portfoliolab
