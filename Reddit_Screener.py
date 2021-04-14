@@ -16,7 +16,24 @@ submissions = api.search_submissions(after=start_time,
                                     filter=['url','author','title','subreddit'])
 
 for submission in submissions:
-    print(submission.created_utc)
-    print(submission.title)
-    print(submission.url)
+    words = submission.title.split()
+    cashtags = list(set(filter(lambda word: word.lower().startswith('$'), words)))
 
+    if len(cashtags) > 0:
+        print(cashtags)
+        print(submission.title)
+
+        for cashtag in cashtags:
+            if cashtag in stocks:
+                submitted_time = datetime.datetime.fromtimestamp(submission.created_utc).isoformat()
+
+                try:
+                    cursor.execute("""
+                        INSERT INTO mention (dt, stock_id, message, source, url)
+                        VALUES (%s, %s, %s, 'wallstreetbets', %s)
+                    """, (submitted_time, stocks[cashtag], submission.title, submission.url))
+
+                    connection.commit()
+                except Exception as e:
+                    print(e)
+                    connection.rollback()

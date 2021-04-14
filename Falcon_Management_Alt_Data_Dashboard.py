@@ -1,5 +1,5 @@
 import os
-#import Momentum
+import Momentum
 import Jim_Dash
 import Falcon_Management_Ranges
 import streamlit as st
@@ -7,8 +7,8 @@ from PIL import Image
 
 PAGES = {
     "Daily Ranges": Jim_Dash,
-    "Risk Ranges Analysis": Falcon_Management_Ranges
-    #"Momentum": Momentum
+    "Risk Ranges Analysis": Falcon_Management_Ranges,
+    "Momentum": Momentum
 }
 
 Falcon = Image.open("Falcon.jpeg")
