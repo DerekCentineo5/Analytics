@@ -4,3 +4,6 @@ plotly>=4.0.0
 streamlit==0.80.0
 pandas_ta
 yfinance
+psycopg2.extras
+psycopg2
+psaw
