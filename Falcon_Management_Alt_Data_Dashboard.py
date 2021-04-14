@@ -1,15 +1,15 @@
 import os
 import sys
+import Mom
 import Jim_Dash
 import Falcon_Management_Ranges
 import streamlit as st
 from PIL import Image
-import Mom
 
 PAGES = {
+    "Momentum": Mom,
     "Daily Ranges": Jim_Dash,
-    "Risk Ranges Analysis": Falcon_Management_Ranges,
-    "Momentum": Mom
+    "Risk Ranges Analysis": Falcon_Management_Ranges
 }
 
 Falcon = Image.open("Falcon.jpeg")
