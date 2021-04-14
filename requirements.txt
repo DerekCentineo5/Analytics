@@ -1,7 +1,7 @@
 numpy>=1.16.0
 ta
 plotly>=4.0.0
-streamlit==0.75.0
+streamlit==0.80.0
 pandas_ta
 yfinance
 portfoliolab==0.1.0
