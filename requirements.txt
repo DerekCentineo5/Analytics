@@ -5,3 +5,4 @@ streamlit==0.80.0
 pandas_ta
 yfinance
 psaw
+alpaca_trade_api
