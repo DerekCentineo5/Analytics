@@ -1,15 +1,15 @@
 import os
 import sys
 import Jim_Dash
-#import Reddit_Screener
+import Alpaca_Feed
 import Falcon_Management_Ranges
 import streamlit as st
 from PIL import Image
 
 PAGES = {
-    #"Momentum": Mom,
     "Daily Ranges": Jim_Dash,
-    "Risk Ranges Analysis": Falcon_Management_Ranges
+    "Risk Ranges Analysis": Falcon_Management_Ranges,
+    "Algorithm": Alpaca_Feed
     #"Social Media Sentiment": Reddit_Screener
 }
 
