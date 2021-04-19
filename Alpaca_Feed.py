@@ -64,7 +64,7 @@ def app():
 
     st.header(f"The Porftolio is {percent_change} Today")
 
-    st.table(Total_Positions)
+    st.dataframe(Total_Positions)
 
     st.table(Order)
 
