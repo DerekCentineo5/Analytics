@@ -1,6 +1,7 @@
 import streamlit as st
 import alpaca_trade_api as tradeapi
 import pandas as pd
+import datetime as dt
 import config
 
 
@@ -11,6 +12,8 @@ def app():
     Positions = api.list_positions()
     Orders = api.list_orders(status='closed')
     Orders
+
+    ##### Positions #####
 
     df = []
     df2 = []
@@ -25,6 +28,8 @@ def app():
     Total_Positions['Qty'] = df3
     Total_Positions = Total_Positions.rename(columns={0:'Symbol'}).set_index('Symbol')
     Total_Positions
+
+    ##### Orders ######
 
     d = []
     d2 = []
@@ -46,11 +51,22 @@ def app():
     Order = Order.rename(columns={0:'Timestamp'}).set_index('Timestamp')
     Order
 
-    st.header("Risk Ranges Algorithm Trades")
+    ##### Portfolio Value #####
 
-    st.write(Total_Positions)
+    Account = api.get_account()
 
-    st.write(Order)
+    balance_change = float(Account.equity) - float(Account.last_equity)
+
+    percent_change = (float(Account.equity)/float(Account.last_equity) - 1)
+
+    percent_change = '{:.3f}%'.format(percent_change*100)
+    percent_change
+
+    st.header(f"The Porftolio is {percent_change} Today")
+
+    st.table(Total_Positions)
+
+    st.table(Order)
 
 
 

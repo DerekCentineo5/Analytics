@@ -68,22 +68,22 @@ for symbol in symbols:
             order_class='bracket',
             stop_loss={'stop_price': RR_Trend},
             take_profit={'limit_price': Near_Top * 1.01}
-        )
+            )   
 
-    #elif Price < Near_Bottom:
-        #if symbol not in existing_order_symbols:
+    elif Price < Near_Bottom:
+        if symbol not in existing_order_symbols:
+            
+            print(symbol)
 
-           # print(symbol)
-
-            #api.submit_order(
-            #symbol=symbol,
-            #qty=100,
-           # side='buy',
-           # type='market',
-           # time_in_force='gtc',
-           # order_class='bracket',
-           # stop_loss={'stop_price': RR_Bottom*.90},
-           # take_profit={'limit_price': RR_Top *.995}
-       # )
+            api.submit_order(
+            symbol=symbol,
+            qty=100,
+            side='buy',
+            type='market',
+            time_in_force='gtc',
+            order_class='bracket',
+            stop_loss={'stop_price': RR_Bottom*.90},
+            take_profit={'limit_price': RR_Top *.995}
+            )   
 
 
