@@ -9,7 +9,7 @@ import requests
 
 def app():
 
-    connection = sqlite3.connect(app.db)
+    connection = sqlite3.connect('/Analytics/app.db')
 
     connection.row_factory = sqlite3.Row
 
