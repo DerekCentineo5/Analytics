@@ -9,5 +9,5 @@ sqlite3
 requests
 datetime
 psycopg2.extras
-psycopg2
+psycopg2-binary
 alpaca_trade_api
