@@ -31,9 +31,6 @@ def app():
     Total_Positions['Unrealized P/L %'] = (df4*100)
     Total_Positions = Total_Positions.rename(columns={0:'Symbol'}).set_index('Symbol')
 
-    format_mapping = {'Unrealized P/L %':"{:.2f}%"}
-    Total_Positions.style.format(format_mapping)
-
     ##### Orders ######
 
     d = []
