@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 
 def app():
 
-    option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'wallstreetbets', 'StockTwits', 'chart', 'pattern'), 2)
+    option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'wallstreetbets', 'StockTwits', 'chart', 'pattern'))
 
     st.header(option)
 
