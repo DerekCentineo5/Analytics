@@ -8,6 +8,6 @@ psaw
 sqlite3
 requests
 datetime
-psycopg2.extras
-psycopg2-binary
+#psycopg2.extras
+#psycopg2-binary
 alpaca_trade_api
