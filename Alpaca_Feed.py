@@ -18,15 +18,21 @@ def app():
     df2 = []
     df3 = []
     df4 = []
+    df5 = []
+    df6 = []
     for position in Positions:
         df.append(position.symbol)
         df2.append(position.side)
         df3.append(position.qty)
+        df5.append(position.cost_basis)
+        df6.append(position.market_value)
         df4.append(float(position.unrealized_plpc)*100)
 
     Total_Positions = pd.DataFrame(df)
     Total_Positions['Side'] = df2
     Total_Positions['Qty'] = df3
+    Total_Positions['Cost Value'] = df5
+    Total_Positions['Market Value'] = df6
     Total_Positions['Unrealized P/L %'] = df4
     Total_Positions = Total_Positions.rename(columns={0:'Symbol'}).set_index('Symbol')
 
