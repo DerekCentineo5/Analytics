@@ -1,17 +1,19 @@
 import config
 import sqlite3
-from psycopg2 import connect
+import psycopg2
 import psycopg2.extras
 import datetime
 import streamlit as st
 import pandas as pd
 import requests
-import 
 
 def app():
 
-    connection = connect(host=config.DB_HOST, database=config.DB_NAME, user=config.DB_USER, password=config.DB_PASS)
-    cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    connection = sqlite3.connect(config.DB_FILE)
+
+    connection.row_factory = sqlite3.Row
+
+    cursor = connection.cursor()    
 
     option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'wallstreetbets', 'stocktwits', 'chart', 'pattern'))
 
