@@ -1,4 +1,3 @@
-from Database import config
 import config
 import sqlite3
 import psycopg2
