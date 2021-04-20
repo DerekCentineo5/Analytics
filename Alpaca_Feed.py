@@ -18,14 +18,17 @@ def app():
     df = []
     df2 = []
     df3 = []
+    df4 = []
     for position in Positions:
         df.append(position.symbol)
         df2.append(position.side)
         df3.append(position.qty)
+        df4.append(position.unrealized_plpc)
 
     Total_Positions = pd.DataFrame(df)
     Total_Positions['Side'] = df2
     Total_Positions['Qty'] = df3
+    Total_Positions['Unrealized P/L %'] = '{:.2f}%'.format(df4)
     Total_Positions = Total_Positions.rename(columns={0:'Symbol'}).set_index('Symbol')
     Total_Positions
 
@@ -50,6 +53,8 @@ def app():
     Order['Filled_Avg_Price'] = d4
     Order = Order.rename(columns={0:'Timestamp'}).set_index('Timestamp')
     Order
+
+    ############
 
     ##### Portfolio Value #####
 

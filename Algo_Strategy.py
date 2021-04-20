@@ -39,7 +39,8 @@ existing_order_symbols = [order.symbol for order in orders]
 current_date = (dt.datetime.today() + dt.timedelta(days=1))
 beginning_date = '2020-07-01'
 
-symbols = ['XLE', 'XLP', 'XLF', 'XLI', 'XRT', 'XLB', 'XLU', 'XLY', 'XLK','SPY','QQQ', 'IWM', 'IWC','DIA', 'EEM']
+symbols = ['ADI', 'TSM', 'MCHP', 'TXN', 'ASML', 'PYPL', 'SQ', 'TMO', 'ILMN','QGEN','EWT', 'EWJ', 'EWZ',
+            'GLD','SLV', 'TMUS', 'CCJ', 'MSFT', 'SWKS', 'MELI', 'EA', 'ERIC', 'NOK', 'COST', 'INTC']
 
 for symbol in symbols:
     
@@ -59,9 +60,13 @@ for symbol in symbols:
             
             print(symbol)
 
+            Account = api.get_account()
+
+            Target_QTY = int((float(Account.equity)*0.03)/Price)
+
             api.submit_order(
             symbol=symbol,
-            qty=100,
+            qty=Target_QTY,
             side='buy',
             type='market',
             time_in_force='gtc',
@@ -75,9 +80,13 @@ for symbol in symbols:
             
             print(symbol)
 
+            Account = api.get_account()
+
+            Target_QTY = int((float(Account.equity)*0.03)/Price)
+
             api.submit_order(
             symbol=symbol,
-            qty=100,
+            qty=Target_QTY,
             side='buy',
             type='market',
             time_in_force='gtc',
