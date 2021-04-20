@@ -22,9 +22,8 @@ def app():
         df.append(position.symbol)
         df2.append(position.side)
         df3.append(position.qty)
-        df4.append(float(position.unrealized_plpc)*100)
-        df4 = '{:.3f}%'.format(df4)
-        
+        df4.append(float(position.unrealized_plpc)*100).apply('{:.3f}%'.format)
+
     Total_Positions = pd.DataFrame(df)
     Total_Positions['Side'] = df2
     Total_Positions['Qty'] = df3
