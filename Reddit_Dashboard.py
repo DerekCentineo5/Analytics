@@ -7,11 +7,11 @@ import plotly.graph_objects as go
 
 def app():
 
-    option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'wallstreetbets', 'StockTwits', 'chart', 'pattern'))
+    option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'wallstreetbets', 'StockTwits', 'chart', 'pattern'), 4)
 
     st.header(option)
 
-    if option == 'stocktwits':
+    if option == 'StockTwits':
         symbol = st.sidebar.text_input("Symbol", value='AAPL', max_chars=5)
 
         r = requests.get(f"https://api.stocktwits.com/api/2/streams/symbol/{symbol}.json")
