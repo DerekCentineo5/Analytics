@@ -44,14 +44,21 @@ cursor.execute("""
 
 cursor.execute("""
     CREATE TABLE mention (
-    stock_id INTEGER,
+    stock_id INTEGER, 
         dt TIMESTAMP WITHOUT TIME ZONE NOT NULL,
         message TEXT NOT NULL,
         source TEXT NOT NULL,
         url TEXT NOT NULL,
         PRIMARY KEY (stock_id, dt),
         CONSTRAINT fk_mention_stock FOREIGN KEY (stock_id) REFERENCES stock (id)
+
     )
+    
+""")
+
+cursor.execute("""
+        SELECT symbol, message, url, dt
+        FROM mention JOIN stock ON stock.id = mention.stock_id
 """)
 
 cursor.execute("""
