@@ -1,6 +1,8 @@
 from Database import config
 import config
 import sqlite3
+import psycopg2
+import psycopg2.extras
 import streamlit as st
 
 def app():
