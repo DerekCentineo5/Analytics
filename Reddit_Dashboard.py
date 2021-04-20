@@ -11,13 +11,12 @@ def app():
 
     st.header(option)
 
+   if option == 'stocktwits':
+        symbol = st.sidebar.text_input("Symbol", value='AAPL', max_chars=5)
 
-    if option == 'stocktwits':
-    symbol = st.sidebar.text_input("Symbol", value='AAPL', max_chars=5)
+        r = requests.get(f"https://api.stocktwits.com/api/2/streams/symbol/{symbol}.json")
 
-    r = requests.get(f"https://api.stocktwits.com/api/2/streams/symbol/{symbol}.json")
-
-    data = r.json()
+        data = r.json()
 
     for message in data['messages']:
         st.image(message['user']['avatar_url'])
