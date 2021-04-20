@@ -1,15 +1,20 @@
-from Database import config
+import config
 import alpaca_trade_api as alpaca
 import psycopg2
 import datetime
+import sqlite3
 import psycopg2.extras
 import asyncpg
 import config
 import pandas as pd
 from psaw import PushshiftAPI
 
-connection = psycopg2.connect(host=config.DB_HOST, database=config.DB_NAME, user=config.DB_USER, password=config.DB_PASS)
-cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+connection = sqlite3.connect(config.DB_FILE)
+
+connection.row_factory = sqlite3.Row
+
+cursor = connection.cursor()
+
 cursor.execute("""
     SELECT * FROM stock
 """)
@@ -46,6 +51,10 @@ for submission in submissions:
                         VALUES (?, ?, ?, 'wallstreetbets', ?)
                     """, (submitted_time, stocks[cashtag], submission.title, submission.url))
 
+                    cursor.execute("""
+                        SELECT symbol, message, url, dt
+                        FROM mention JOIN stock ON stock.id = mention.stock_id
+                    """,)
                     connection.commit()
 
                 except Exception as e:

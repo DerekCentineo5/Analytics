@@ -1,84 +1,124 @@
-import psycopg2
-import psycopg2.extras
-import datetime
-import streamlit as st
-import pandas as pd
-import requests
-import config
-from psaw import PushshiftAPI
 
-def app():
+    auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET)
+    auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
+    api = tweepy.API(auth)
 
-    connection = psycopg2.connect(host=config.DB_HOST, database=config.DB_NAME, user=config.DB_USER, password=config.DB_PASS)
-    cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-    option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'wallstreetbets', 'stocktwits', 'chart', 'pattern'))
 
     if option == 'twitter':
-        for username in config.TWITTER_USERNAMES:
-            user = api.get_user(username)
-            tweets = api.user_timeline(username)
 
-            st.subheader(username)
-            st.image(user.profile_image_url)
-            
+        def DownloadData(self):
+            # authenticating
+            consumerKey = 'your key here'
+            consumerSecret = 'your key here'
+            accessToken = 'your key here'
+            accessTokenSecret = 'your key here'
+            auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
+            auth.set_access_token(accessToken, accessTokenSecret)
+            api = tweepy.API(auth)
+
+            # input for term to be searched and how many tweets to search
+            searchTerm = input("Enter Keyword/Tag to search about: ")
+            NoOfTerms = int(input("Enter how many tweets to search: "))
+
+            # searching for tweets
+            tweets = tweepy.Cursor(api.search, q=searchTerm, lang = "en").items(NoOfTerms)
+
+            # creating some variables to store info
+            polarity = 0
+            positive = 0
+            negative = 0
+            neutral = 0
+
+            # iterating through tweets fetched
             for tweet in tweets:
-                if '$' in tweet.text:
-                    words = tweet.text.split(' ')
-                    for word in words:
-                        if word.startswith('$') and word[1:].isalpha():
-                            symbol = word[1:]
-                            st.write(symbol)
-                            st.write(tweet.text)
-                            st.image(f"https://finviz.com/chart.ashx?t={symbol}")
+                # print (tweet.text.translate(non_bmp_map))    #print tweet's text
+                analysis = TextBlob(tweet.text)
+                # print(analysis.sentiment)  # print tweet's polarity
+                polarity += analysis.sentiment.polarity  # adding up polarities to find the average later
+
+                if (analysis.sentiment.polarity == 0):  # adding reaction of how people are reacting to find average later
+                    neutral += 1
+                elif (analysis.sentiment.polarity > 0.00):
+                    positive += 1
+                elif (analysis.sentiment.polarity < 0.00):
+                    negative += 1
+
+            # finding average of how people are reacting
+            positive = percentage(positive, NoOfTerms)
+            negative = percentage(negative, NoOfTerms)
+            neutral = percentage(neutral, NoOfTerms)
+
+            labels = ['Positive [' + str(positive) + '%]', 'Weakly Positive [' + str(wpositive) + '%]','Strongly Positive [' + str(spositive) + '%]', 'Neutral [' + str(neutral) + '%]',
+                    'Negative [' + str(negative) + '%]', 'Weakly Negative [' + str(wnegative) + '%]', 'Strongly Negative [' + str(snegative) + '%]']
+            sizes = [positive, wpositive, spositive, neutral, negative, wnegative, snegative]
+            colors = ['yellowgreen','lightgreen','darkgreen', 'gold', 'red','lightsalmon','darkred']
+            patches, texts = plt.pie(sizes, colors=colors, startangle=90)
+            plt.legend(patches, labels, loc="best")
+            plt.title('How people are reacting on ' + searchTerm + ' by analyzing ' + str(noOfSearchTerms) + ' Tweets.')
+            plt.axis('equal')
+            plt.tight_layout()
+            plt.show()
 
 
-    if option == 'stocktwits':
-        symbol = st.sidebar.text_input("Symbol", value='AAPL', max_chars=5)
-
-        r = requests.get(f"https://api.stocktwits.com/api/2/streams/symbol/{symbol}.json")
-
-        data = r.json()
-
-        for message in data['messages']:
-            st.image(message['user']['avatar_url'])
-            st.write(message['user']['username'])
-            st.write(message['created_at'])
-            st.write(message['body'])
+            # printing out data
+            print("How people are reacting on " + searchTerm + " by analyzing " + str(NoOfTerms) + " tweets.")
 
 
-    if option == 'wallstreetbets':
-        num_days = st.sidebar.slider('Number of days', 1, 30, 3)
 
-        cursor.execute("""
-            SELECT COUNT(*) AS num_mentions, symbol
-            FROM mention JOIN stock ON stock.id = mention.stock_id
-            WHERE date(dt) > current_date - interval '%s day'
-            GROUP BY stock_id, symbol   
-            HAVING COUNT(symbol) > 10
-            ORDER BY num_mentions DESC
-        """, (num_days,))
 
-        counts = cursor.fetchall()
-        for count in counts:
-            st.write(count)
-        
-        cursor.execute("""
-            SELECT symbol, message, url, dt
-            FROM mention JOIN stock ON stock.id = mention.stock_id
-            ORDER BY dt DESC
-            LIMIT 100
-        """)
+            print("General Report: ")
 
-        mentions = cursor.fetchall()
-        for mention in mentions:
-            st.text(mention['dt'])
-            st.text(mention['symbol'])
-            st.text(mention['message'])
-            st.text(mention['url'])
-            #st.text(mention['username'])
+            if (polarity == 0):
+                print("Neutral")
+            elif (polarity > 0 and polarity <= 0.3):
+                print("Weakly Positive")
+            elif (polarity > 0.3 and polarity <= 0.6):
+                print("Positive")
+            elif (polarity > 0.6 and polarity <= 1):
+                print("Strongly Positive")
+            elif (polarity > -0.3 and polarity <= 0):
+                print("Weakly Negative")
+            elif (polarity > -0.6 and polarity <= -0.3):
+                print("Negative")
+            elif (polarity > -1 and polarity <= -0.6):
+                print("Strongly Negative")
 
-        rows = cursor.fetchall()
+            print()
+            print("Detailed Report: ")
+            print(str(positive) + "% people thought it was positive")
+            print(str(wpositive) + "% people thought it was weakly positive")
+            print(str(spositive) + "% people thought it was strongly positive")
+            print(str(negative) + "% people thought it was negative")
+            print(str(wnegative) + "% people thought it was weakly negative")
+            print(str(snegative) + "% people thought it was strongly negative")
+            print(str(neutral) + "% people thought it was neutral")
 
-        st.write(rows)
+            self.plotPieChart(positive, wpositive, spositive, negative, wnegative, snegative, neutral, searchTerm, NoOfTerms)
 
+
+        def cleanTweet(self, tweet):
+            # Remove Links, Special Characters etc from tweet
+            return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t]) | (\w +:\ / \ / \S +)", " ", tweet).split())
+
+        # function to calculate percentage
+        def percentage(self, part, whole):
+            temp = 100 * float(part) / float(whole)
+            return format(temp, '.2f')
+
+        def plotPieChart(self, positive, wpositive, spositive, negative, wnegative, snegative, neutral, searchTerm, noOfSearchTerms):
+            labels = ['Positive [' + str(positive) + '%]', 'Weakly Positive [' + str(wpositive) + '%]','Strongly Positive [' + str(spositive) + '%]', 'Neutral [' + str(neutral) + '%]',
+                    'Negative [' + str(negative) + '%]', 'Weakly Negative [' + str(wnegative) + '%]', 'Strongly Negative [' + str(snegative) + '%]']
+            sizes = [positive, wpositive, spositive, neutral, negative, wnegative, snegative]
+            colors = ['yellowgreen','lightgreen','darkgreen', 'gold', 'red','lightsalmon','darkred']
+            patches, texts = plt.pie(sizes, colors=colors, startangle=90)
+            plt.legend(patches, labels, loc="best")
+            plt.title('How people are reacting on ' + searchTerm + ' by analyzing ' + str(noOfSearchTerms) + ' Tweets.')
+            plt.axis('equal')
+            plt.tight_layout()
+            plt.show()
+
+
+
+if __name__== "__main__":
+    sa = SentimentAnalysis()
+    sa.DownloadData()

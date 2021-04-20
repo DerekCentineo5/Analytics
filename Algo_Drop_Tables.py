@@ -12,6 +12,10 @@ cursor.execute("""
 """)
 
 cursor.execute("""
+    DROP TABLE mention
+""")
+
+cursor.execute("""
     DROP TABLE strategy
 """)
 
