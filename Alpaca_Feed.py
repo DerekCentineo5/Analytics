@@ -28,8 +28,9 @@ def app():
     Total_Positions = pd.DataFrame(df)
     Total_Positions['Side'] = df2
     Total_Positions['Qty'] = df3
-    Total_Positions['Unrealized P/L %'] = df4
+    Total_Positions['Unrealized P/L %'] = df4*100
     Total_Positions = Total_Positions.rename(columns={0:'Symbol'}).set_index('Symbol')
+    Total_Positions = Total_Positions.style.format({'Unrealized P/L %':"{:.2%}"})
     Total_Positions
 
     ##### Orders ######
