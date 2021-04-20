@@ -1,7 +1,7 @@
 import config
 import sqlite3
-#import psycopg2
-#import psycopg2.extras
+from psycopg2 import connect
+import psycopg2.extras
 import datetime
 import streamlit as st
 import pandas as pd
@@ -9,11 +9,8 @@ import requests
 
 def app():
 
-    connection = sqlite3.connect('/Analytics/app.db')
-
-    connection.row_factory = sqlite3.Row
-
-    cursor = connection.cursor()    
+    connection = connect(host=config.DB_HOST, database=config.DB_NAME, user=config.DB_USER, password=config.DB_PASS)
+    cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
     option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'wallstreetbets', 'stocktwits', 'chart', 'pattern'))
 
