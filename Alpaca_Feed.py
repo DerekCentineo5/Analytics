@@ -12,7 +12,6 @@ def app():
     Positions = api.list_positions()
     Orders = api.list_orders(status='closed')
     Orders
-
     ##### Positions #####
 
     df = []
@@ -23,12 +22,12 @@ def app():
         df.append(position.symbol)
         df2.append(position.side)
         df3.append(position.qty)
-        df4.append(position.unrealized_plpc)
+        df4.append(float(position.unrealized_plpc)*100)
 
     Total_Positions = pd.DataFrame(df)
     Total_Positions['Side'] = df2
     Total_Positions['Qty'] = df3
-    Total_Positions['Unrealized P/L %'] = df4.round(2)
+    Total_Positions['Unrealized P/L %'] = df4.apply('{:.3f}%'.format)
     Total_Positions = Total_Positions.rename(columns={0:'Symbol'}).set_index('Symbol')
 
     ##### Orders ######
