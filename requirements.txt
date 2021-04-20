@@ -5,4 +5,6 @@ streamlit==0.80.0
 pandas_ta
 yfinance
 psaw
+psycopg2.extras
+psycopg2
 alpaca_trade_api
