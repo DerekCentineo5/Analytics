@@ -1,7 +1,5 @@
 import config
 import sqlite3
-import psycopg2
-import psycopg2.extras
 import datetime
 import streamlit as st
 import pandas as pd
