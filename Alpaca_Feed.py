@@ -24,12 +24,12 @@ def app():
         df3.append(position.qty)
         df4.append(float(position.unrealized_plpc)*100)
 
+    df4 = '{:.3f}%'.format(df4)
     Total_Positions = pd.DataFrame(df)
     Total_Positions['Side'] = df2
     Total_Positions['Qty'] = df3
     Total_Positions['Unrealized P/L %'] = df4
     Total_Positions = Total_Positions.rename(columns={0:'Symbol'}).set_index('Symbol')
-    Total_Positions[['Unrealized P/L %']] = '{:.3f}%'.format(Total_Positions[['Unrealized P/L %']])
 
     ##### Orders ######
 
