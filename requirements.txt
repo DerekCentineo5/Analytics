@@ -6,6 +6,8 @@ pandas_ta
 yfinance
 psaw
 sqlite3
+requests
+datetime
 psycopg2.extras
 psycopg2
 alpaca_trade_api
