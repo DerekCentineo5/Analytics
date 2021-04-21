@@ -8,7 +8,7 @@ psaw
 sqlite3
 requests
 datetime
-backtesting
+Backtesting
 ta
 pandas_ta
 alpaca_trade_api
