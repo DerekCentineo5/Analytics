@@ -93,7 +93,7 @@ def app():
 
         Data = get_data(Start=start, End=end)
 
-        st.write(Data)
+        st.dataframe(Data.top_searched)
         
 
 
