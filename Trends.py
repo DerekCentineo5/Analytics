@@ -5,33 +5,6 @@ import pandas as pd
 import datetime as dt
 import streamlit as st
 
-Trending_Terms = TrendReq(hl='en-US', tz=360)
-Keywords = ['share price','stock price', 'price']
-
-start = dt.datetime(2017, 1, 1).strftime("%Y-%m-%d")
-end ='2018-07-01'
-
-Trending_Terms.build_payload(
-            kw_list=Keywords,
-            cat=0,
-            timeframe=f'{start} {end}',
-            geo='US',
-            gprop='')
-
-Trending_Terms.get_historical_interest(keywords=Keywords, year_start=2018, month_start=1, day_start=1,
-                                        year_end=2018, month_end=1, day_end=20, cat=0, geo='', gprop='', sleep=60)
-                                    
-
-Interest_Over_Time = Trending_Terms.interest_over_time()
-Interest_Over_Time
-
-Related_Queries = Trending_Terms.related_queries()
-Related_Queries
-
-
-
-
-
 def app():
 
     st.write("""
