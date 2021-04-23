@@ -12,7 +12,7 @@ def app():
         Google Trends Narrative Tool
         """)
 
-    option = st.sidebar.selectbox("Google Trends Data", ('Top & Rising', 'Historical Trends', 'stocktwits', 'chart', 'pattern'), 0)
+    option = st.sidebar.selectbox("Google Trends Data", ('Top & Rising', 'Historical Trends'), 0)
 
 
     if option == 'Top & Rising':
@@ -45,8 +45,9 @@ def app():
         rising_searched=pd.DataFrame(rising_queries[0])
         rising_searched
 
+        st.header("Top Trends")
         st.write(top_searched)
-
+        st.header("Rising Trends")
         st.write(rising_searched)
     
     if option == 'Historical Trends':
