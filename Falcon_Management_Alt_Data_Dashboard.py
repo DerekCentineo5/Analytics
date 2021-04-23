@@ -4,7 +4,7 @@ import numpy.core.multiarray
 import pytrends
 import Jim_Dash
 import Alpaca_Feed
-#import Trends
+import Trends
 #import Momentum
 #import Backtest_Beta
 import Reddit_Dashboard
@@ -17,7 +17,7 @@ PAGES = {
     "Risk Ranges Analysis": Falcon_Management_Ranges,
     "Algorithm": Alpaca_Feed,
     #"Momentum": Momentum
-    #"Google Trends": Trends
+    "Google Trends": Trends
     #'Social Media Sentiment': Reddit_Dashboard
 }
 
