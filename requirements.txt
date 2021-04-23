@@ -8,7 +8,6 @@ psaw
 sqlite3
 requests
 datetime
-backtesting
 ta
 pandas_ta
 pytrends
