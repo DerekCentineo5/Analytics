@@ -1,5 +1,5 @@
-numpy.core.multiarray
 portfoliolab
+cvxpy==1.1.1
 numpy
 ta
 plotly
