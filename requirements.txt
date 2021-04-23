@@ -5,10 +5,7 @@ streamlit
 pandas_ta
 yfinance
 psaw
-sqlite3
 requests
 datetime
-ta
 pandas_ta
-pytrends
 alpaca_trade_api
