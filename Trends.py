@@ -53,14 +53,14 @@ def app():
 
         def get_input():
 
-        start_date = st.sidebar.text_input("Start Date", "2018-01-01")
-        end_date = st.sidebar.text_input("End Date", (dt.datetime.today()).strftime("%Y-%m-%d"))
-        #Specific_Security_Option = st.sidebar.selectbox("Specific Trend?", ("Yes", "No"))
-        #symbol = st.sidebar.text_input("Trend or ")
-        trade_period = st.sidebar.slider("Trade Period", min_value=2, max_value=21,value=10, step=1)
-        trend_period = st.sidebar.slider("Trend Period", min_value=60, max_value=130,value=63, step=1)
+            start_date = st.sidebar.text_input("Start Date", "2018-01-01")
+            end_date = st.sidebar.text_input("End Date", (dt.datetime.today()).strftime("%Y-%m-%d"))
+            #Specific_Security_Option = st.sidebar.selectbox("Specific Trend?", ("Yes", "No"))
+            #symbol = st.sidebar.text_input("Trend or ")
+            trade_period = st.sidebar.slider("Trade Period", min_value=2, max_value=21,value=10, step=1)
+            trend_period = st.sidebar.slider("Trend Period", min_value=60, max_value=130,value=63, step=1)
 
-        return start_date, end_date
+            return start_date, end_date
 
         def get_data(Start, End):
 
@@ -85,7 +85,7 @@ def app():
             top_searched=pd.DataFrame(top_queries[1])
             rising_searched=pd.DataFrame(rising_queries[1])
 
-        return top_searched, rising_searched
+            return top_searched, rising_searched
 
         start, end = get_input()
 
