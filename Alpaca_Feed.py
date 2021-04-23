@@ -71,7 +71,7 @@ def app():
     percent_change = '{:.3f}%'.format(percent_change*100)
     percent_change
 
-    st.header(f"The Porftolio is {percent_change} Today")
+    st.header(f"Portfolio Performance Today: {percent_change}")
 
     st.dataframe(Total_Positions)
 

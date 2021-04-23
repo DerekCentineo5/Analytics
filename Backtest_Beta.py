@@ -9,6 +9,9 @@ from ta.volatility import average_true_range
 from pandas_ta.overlap import vwma
 from pandas_ta.overlap import wma
 
+from datetime import datetime
+import backtrader as bt
+
 def RiskRange(Price_Data, window=10, length=63, volume_weighted=True, vol_window=10, mindiff=100000000.0, maxdiff=-100000000.0):
     """
     Function to Calculate Risk Ranges
