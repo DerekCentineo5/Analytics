@@ -3,9 +3,8 @@ ta
 plotly
 streamlit
 pandas_ta
+pytrends==4.7.3
 yfinance
-psaw
-requests
 datetime
 pandas_ta
 alpaca_trade_api

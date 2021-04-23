@@ -1,5 +1,6 @@
 import os
 import sys
+import pytrends
 import Jim_Dash
 import Alpaca_Feed
 import Trends
