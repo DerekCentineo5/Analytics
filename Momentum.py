@@ -1,6 +1,7 @@
 import portfoliolab
 from portfoliolab.online_portfolio_selection import *
 import pandas as pd
+import numpy.core.multiarray
 import yfinance as yf
 import streamlit as st
 
