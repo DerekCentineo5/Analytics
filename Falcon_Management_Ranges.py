@@ -123,6 +123,8 @@ def app():
 
     RR = RR.sort_index(ascending=False)
 
+    RR.index = RR.index.strftime("%Y-%m-%d")
+
     ############################################################ Display ############################################################
 
     Company_Name = yf.Ticker(symbol).info['shortName']
