@@ -121,6 +121,8 @@ def app():
     #Calculate Risk Ranges
     RR = RiskRange(Price_Data=Data, window=trade, length=trend, volume_weighted=vw, vol_window=trade)
 
+    RR = RR.sort_index(ascending=False)
+
     ############################################################ Display ############################################################
 
     Company_Name = yf.Ticker(symbol).info['shortName']
@@ -142,6 +144,6 @@ def app():
         legend=dict(orientation="h",yanchor="bottom",y=1,xanchor="left",x=0))
 
     st.plotly_chart(fig, use_container_width=False)
-
+    st.header('Risk Ranges Data')
     st.write(RR)
 
