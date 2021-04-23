@@ -62,13 +62,12 @@ def app():
 
         def get_data(Start, End):
 
-            start = Start
-            end = End
+            Trending_Terms = TrendReq(hl='en-US', tz=360)
 
             Trending_Terms.build_payload(
             kw_list=Keywords,
             cat=0,
-            timeframe=f'{start} {end}',
+            timeframe=f'{Start} {End}',
             geo='US',
             gprop='')
 
