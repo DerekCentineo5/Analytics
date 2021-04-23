@@ -19,7 +19,7 @@ def app():
     
         Trending_Terms = TrendReq(hl='en-US', tz=360)
 
-        Keywords = ['share price','stock price']
+        Keywords = ['stock price']
 
         Trending_Terms.build_payload(
             kw_list=Keywords,
