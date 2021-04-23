@@ -3,7 +3,7 @@ import sys
 import pytrends
 import Jim_Dash
 import Alpaca_Feed
-import Trends
+#import Trends
 import Momentum
 #import Backtest_Beta
 import Reddit_Dashboard
