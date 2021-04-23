@@ -1,5 +1,5 @@
 numpy.core.multiarray
-portfoliolab
+portfoliolab==0.1.0
 numpy
 ta
 plotly
