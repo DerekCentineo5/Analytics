@@ -11,4 +11,5 @@ datetime
 backtesting
 ta
 pandas_ta
+pytrends
 alpaca_trade_api

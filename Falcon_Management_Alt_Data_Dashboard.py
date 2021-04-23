@@ -2,6 +2,7 @@ import os
 import sys
 import Jim_Dash
 import Alpaca_Feed
+import Trends
 #import Backtest_Beta
 import Reddit_Dashboard
 import Falcon_Management_Ranges
@@ -11,9 +12,9 @@ from PIL import Image
 PAGES = {
     "Daily Ranges": Jim_Dash,
     "Risk Ranges Analysis": Falcon_Management_Ranges,
-    #"Ranges Backtester": Backtest_Beta,
     "Algorithm": Alpaca_Feed,
-    'Social Media Sentiment': Reddit_Dashboard
+    "Google Trends": Trends
+    #'Social Media Sentiment': Reddit_Dashboard
 }
 
 Falcon = Image.open("Falcon.jpeg")

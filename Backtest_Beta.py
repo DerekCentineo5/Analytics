@@ -3,13 +3,11 @@ import backtesting
 import numpy as np
 import yfinance as yf
 import streamlit as st
+from datetime import datetime
+import backtrader as bt
 from ta.volatility import average_true_range
 from pandas_ta.overlap import vwma
 from pandas_ta.overlap import wma
-from backtesting import Strategy
-from backtesting import Backtest
-from backtesting.lib import crossover
-from backtesting.test import GOOG, SMA
 
 def RiskRange(Price_Data, window=10, length=63, volume_weighted=True, vol_window=10, mindiff=100000000.0, maxdiff=-100000000.0):
     """
@@ -73,65 +71,84 @@ def RiskRange(Price_Data, window=10, length=63, volume_weighted=True, vol_window
     
     return Output
 
-def app():
 
-    def get_input():
+class DonchianChannels(bt.Indicator):
+    '''
+    Params Note:
+      - `lookback` (default: -1)
+        If `-1`, the bars to consider will start 1 bar in the past and the
+        current high/low may break through the channel.
+        If `0`, the current prices will be considered for the Donchian
+        Channel. This means that the price will **NEVER** break through the
+        upper/lower channel bands.
+    '''
 
-        start_date = st.sidebar.text_input("Start Date", "2018-01-01")
-        end_date = st.sidebar.text_input("End Date", (dt.datetime.today() + dt.timedelta(days=1)).strftime("%Y-%m-%d"))
-        stock_symbol = st.sidebar.text_input("Yahoo Finance Symbol", "QQQ")
-        volume_weighted = st.sidebar.selectbox("Volume Weighted", (True, False))
-        trade_period = st.sidebar.slider("Trade Period", min_value=2, max_value=21,value=10, step=1)
-        trend_period = st.sidebar.slider("Trend Period", min_value=60, max_value=130,value=63, step=1)
+    alias = ('DCH', 'DonchianChannel',)
 
-        return start_date, end_date, stock_symbol, volume_weighted, trade_period, trend_period
+    lines = ('dcm', 'dch', 'dcl',)  # dc middle, dc high, dc low
+    params = dict(
+        period=20,
+        lookback=-1,  # consider current bar or not
+    )
 
-    def get_data(symbol, Start, End):
+    plotinfo = dict(subplot=False)  # plot along with data
+    plotlines = dict(
+        dcm=dict(ls='--'),  # dashed line
+        dch=dict(_samecolor=True),  # use same color as prev line (dcm)
+        dcl=dict(_samecolor=True),  # use same color as prev line (dch)
+    )
 
-        Data = yf.download(symbol, start=Start, end=End)
+    def __init__(self):
+        hi, lo = self.data.high, self.data.low
+        if self.p.lookback:  # move backwards as needed
+            hi, lo = hi(self.p.lookback), lo(self.p.lookback)
 
-        return Data
-
-    start, end, symbol, vw, trade, trend = get_input()
-
-    Data = get_data(symbol=symbol, Start=start, End=end)
-    
-    df = RiskRange(Data, window=trade, length=trend, volume_weighted=vw, vol_window=trade)
-    Data['BOTTOM_RR'] = df.Bottom_RR
-    Data['TREND'] = df.Trend
-    Data['TOP_RR'] = df.Top_RR 
-    Data = Data.dropna()
-
-    class Ranges(Strategy):
-        # Define the two MA lags as *class variables*
-        # for later optimization
-
-        def init(self):
-            # Precompute the two moving averages
-            self.data.BOTTOM_RR
-            self.data.TREND
-            self.data.Close
-            self.data.TOP_RR
-        
-        def next(self):
-            if crossover(self.data.BOTTOM_RR, self.data.Close):
-                self.buy()
-            elif crossover(self.data.Close, self.data.TOP_RR):
-                self.position.close()
-            elif crossover(self.data.TREND, self.data.BOTTOM_RR):
-                self.position.close()
-                #self.buy()
+        self.l.dch = bt.ind.Highest(hi, period=self.p.period)
+        self.l.dcl = bt.ind.Lowest(lo, period=self.p.period)
+        self.l.dcm = (self.l.dch + self.l.dcl) / 2.0  # avg of the above
 
 
-    bt = Backtest(Data, Ranges, commission=.002,
-                exclusive_orders=True)
-        
-    stats = bt.run()
+class MyStrategy(bt.Strategy):
+    def __init__(self):
+        self.myind = DonchianChannels()
 
-    Returns_Plot = bt.plot(plot_return=True)
+    def next(self):
+        if self.data[0] > self.myind.dch[0]:
+            self.buy()
+        elif self.data[0] < self.myind.dcl[0]:
+            self.sell()
 
-    raw_html = Returns_Plot._repr_html_()
+if __name__ == '__main__':
+    cerebro = bt.Cerebro()
+    cerebro.addstrategy(MyStrategy)
+    cerebro.broker.setcash(1337.0)
+    cerebro.broker.setcommission(commission=0.001)
 
-    st.components.v1.html(raw_html)
+    data = bt.feeds.YahooFinanceData(dataname='AAPL',
+                                     fromdate=datetime(2010, 1, 1),
+                                     todate=datetime(2017, 12, 31))
+    cerebro.adddata(data)
+    print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
+    results = cerebro.run()
+    print('Ending Portfolio Value: %.2f' % cerebro.broker.getvalue())
+    strat = results[0]
+    pyfoliozer = strat.analyzers.getbyname('pyfolio')
 
-    st.table(stats)
+    returns, positions, transactions, gross_lev = pyfoliozer.get_pf_items()
+    if args.printout:
+        print('-- RETURNS')
+        print(returns)
+        print('-- POSITIONS')
+        print(positions)
+        print('-- TRANSACTIONS')
+        print(transactions)
+        print('-- GROSS LEVERAGE')
+        print(gross_lev)
+
+    pf.create_full_tear_sheet(
+        returns,
+        positions=positions,
+        transactions=transactions,
+        gross_lev=gross_lev,
+        live_start_date='2010-01-01',
+        round_trips=True)
