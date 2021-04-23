@@ -1,7 +1,7 @@
 numpy
 ta
 plotly>=4.0.0
-streamlit==0.80.0
+streamlit
 pandas_ta
 yfinance
 psaw
@@ -11,5 +11,5 @@ datetime
 backtesting
 ta
 pandas_ta
-pytrends==4.7.3
+pytrends
 alpaca_trade_api
