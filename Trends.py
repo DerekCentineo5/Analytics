@@ -87,13 +87,13 @@ def app():
             top_searched=pd.DataFrame(top_queries[1])
             rising_searched=pd.DataFrame(rising_queries[1])
 
-            return top_searched, rising_searched
+            return top_searched
 
         start, end = get_input()
 
         Data = get_data(Start=start, End=end)
 
-        st.dataframe(Data.top_searched)
+        st.dataframe(Data)
         
 
 
