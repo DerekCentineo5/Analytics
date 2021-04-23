@@ -40,9 +40,9 @@ def app():
                     top_queries.append(v1)
                 elif(k1=="rising"):
                     rising_queries.append(v1)
-        top_searched=pd.DataFrame(top_queries[1])
+        top_searched=pd.DataFrame(top_queries[0])
         top_searched
-        rising_searched=pd.DataFrame(rising_queries[1])
+        rising_searched=pd.DataFrame(rising_queries[0])
         rising_searched
 
         st.write(top_searched)
