@@ -95,7 +95,11 @@ def app():
         TOP, RISING = get_data(Start=start, End=end)
 
         st.header("Top Trends")
-        st.dataframe(TOP)
+        #st.dataframe(fig)
+        fig = go.Figure(data=go.Histogram(x=TOP['query'], y=TOP['value'], name="Trend"))
+        st.plotly_chart(fig, use_container_width=False)
+
+
         st.header("Rising Trends")
         st.dataframe(RISING)
         
