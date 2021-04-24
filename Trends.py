@@ -47,7 +47,7 @@ def app():
 
         st.header("Top Trends")
         fig = go.Figure(data=go.Bar(x=top_searched['query'], y=top_searched['value'], name="Trend"))
-        st.plotly_chart(fig, use_container_width=False)
+        st.plotly_chart(fig, use_container_width=True)
         st.header("Rising Trends")
         st.write(rising_searched)
     
