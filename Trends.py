@@ -46,7 +46,8 @@ def app():
         rising_searched
 
         st.header("Top Trends")
-        st.write(top_searched)
+        fig = go.Figure(data=go.bar(x=top_searched['query'], y=top_searched['value'], name="Trend"))
+        st.plotly_chart(fig, use_container_width=False)
         st.header("Rising Trends")
         st.write(rising_searched)
     
@@ -95,10 +96,7 @@ def app():
         TOP, RISING = get_data(Start=start, End=end)
 
         st.header("Top Trends")
-        #st.dataframe(fig)
-        fig = go.Figure(data=go.Histogram(x=TOP['query'], y=TOP['value'], name="Trend"))
-        st.plotly_chart(fig, use_container_width=False)
-
+        st.dataframe(TOP)
 
         st.header("Rising Trends")
         st.dataframe(RISING)
