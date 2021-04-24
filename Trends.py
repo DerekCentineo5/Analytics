@@ -121,11 +121,11 @@ def app():
 #names = []
 #stock_dict = {}
 #for row in rows:
-    symbol = row['symbol']
-    name = row['name']
-    symbols.append(symbol)
-    names.append(name)
-    stock_dict[symbol] = row['id']
+    #symbol = row['symbol']
+    #name = row['name']
+    #symbols.append(symbol)
+    #names.append(name)
+    #stock_dict[symbol] = row['id']
 #df=pd.DataFrame(symbols, columns=['Symbol'])
 #df['Name'] = names
 #df
