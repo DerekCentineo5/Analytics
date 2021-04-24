@@ -2,6 +2,8 @@ import pytrends
 from pytrends.request import TrendReq
 import plotly.graph_objects as go
 import pandas as pd
+import sqlite3
+import config
 import datetime as dt
 import streamlit as st
 
@@ -41,15 +43,16 @@ def app():
                 elif(k1=="rising"):
                     rising_queries.append(v1)
         top_searched=pd.DataFrame(top_queries[0])
-        top_searched
+        top_searched['query'] = top_searched['query'].str.split(' ').str[0]
         rising_searched=pd.DataFrame(rising_queries[0])
-        rising_searched
+        rising_searched['query'] = rising_searched['query'].str.split(' ').str[0]
 
         st.header("Top Trends")
         fig = go.Figure(data=go.Bar(x=top_searched['query'], y=top_searched['value'], name="Trend"))
         st.plotly_chart(fig, use_container_width=True)
         st.header("Rising Trends")
-        st.write(rising_searched)
+        fig2 = go.Figure(data=go.Bar(x=rising_searched['query'], y=rising_searched['value'], name="Trend"))
+        st.plotly_chart(fig2, use_container_width=True)
     
     if option == 'Historical Trends':
 
@@ -100,6 +103,32 @@ def app():
 
         st.header("Rising Trends")
         st.dataframe(RISING)
-        
+
+#############################
+#connection = sqlite3.connect(config.DB_FILE)
+
+#connection.row_factory = sqlite3.Row
+
+#cursor = connection.cursor()
+
+#cursor.execute("""
+#    SELECT id, symbol, name FROM stock
+#""")
+
+#rows = cursor.fetchall()
+
+#symbols = []
+#names = []
+#stock_dict = {}
+#for row in rows:
+    symbol = row['symbol']
+    name = row['name']
+    symbols.append(symbol)
+    names.append(name)
+    stock_dict[symbol] = row['id']
+#df=pd.DataFrame(symbols, columns=['Symbol'])
+#df['Name'] = names
+#df
+
 
 

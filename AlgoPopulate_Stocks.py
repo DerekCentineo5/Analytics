@@ -14,7 +14,6 @@ cursor.execute("""
 
 rows = cursor.fetchall()
 
-
 symbols = [row['symbol'] for row in rows]
 
 #### Link to Config in future!!!!!
