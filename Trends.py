@@ -49,6 +49,11 @@ def app():
 
         st.header("Top Trends")
         fig = go.Figure(data=go.Bar(x=top_searched['query'], y=top_searched['value'], name="Trend"))
+        fig.update_layout(
+            xaxis=dict(title="Trend"),
+            yaxis=dict(title="Mentions"),
+            fontsize=12
+            )
         st.plotly_chart(fig, use_container_width=True)
         st.header("Rising Trends")
         fig2 = go.Figure(data=go.Bar(x=rising_searched['query'], y=rising_searched['value'], name="Trend"))
@@ -58,7 +63,7 @@ def app():
 
         def get_input():
 
-            start_date = st.sidebar.text_input("Start Date", "2018-01-01")
+            start_date = st.sidebar.text_input("Start Date", (dt.datetime.today() - dt.timedelta(days=1)).strftime("%Y-%m-%d"))
             end_date = st.sidebar.text_input("End Date", (dt.datetime.today()).strftime("%Y-%m-%d"))
             #Specific_Security_Option = st.sidebar.selectbox("Specific Trend?", ("Yes", "No"))
             #symbol = st.sidebar.text_input("Trend or ")
