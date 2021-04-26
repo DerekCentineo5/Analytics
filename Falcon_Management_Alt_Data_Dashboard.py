@@ -7,7 +7,7 @@ import Alpaca_Feed
 import Trends
 #import Momentum
 #import Backtest_Beta
-import Reddit_Dashboard
+#import Reddit_Dashboard
 import Falcon_Management_Ranges
 import streamlit as st
 from PIL import Image
