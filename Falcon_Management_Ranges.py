@@ -103,7 +103,7 @@ def app():
         stock_symbol = st.sidebar.text_input("Yahoo Finance Symbol", "QQQ")
         volume_weighted = st.sidebar.selectbox("Volume Weighted", (True, False))
         trade_period = st.sidebar.slider("Trade Period", min_value=2, max_value=21,value=10, step=1)
-        trend_period = st.sidebar.slider("Trend Period", min_value=60, max_value=130,value=63, step=1)
+        trend_period = st.sidebar.slider("Trend Period", min_value=21, max_value=130,value=63, step=1)
 
         return start_date, end_date, stock_symbol, volume_weighted, trade_period, trend_period
 
