@@ -52,7 +52,6 @@ def app():
         fig.update_layout(
             xaxis=dict(title="Trend"),
             yaxis=dict(title="Mentions"),
-            fontsize=12
             )
         st.plotly_chart(fig, use_container_width=True)
         st.header("Rising Trends")
