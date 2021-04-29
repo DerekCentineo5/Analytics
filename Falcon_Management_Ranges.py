@@ -144,7 +144,7 @@ def app():
     if spread==False:
         st.header(Company_Name +" Risk Ranges\n")
     elif spread==True:
-        st.header(Ticker1+"Ratio Analysis")
+        st.header(Ticker1+"Ratio Analysis\n")
 
     fig = go.Figure(data=go.Scatter(x=RR.index, y=RR['Trend'], name="Trend"))
 
