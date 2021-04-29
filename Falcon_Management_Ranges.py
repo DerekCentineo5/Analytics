@@ -17,15 +17,6 @@ from pandas_ta.overlap import wma
 import ta
 import numpy as np
 
-df = yf.download("DOT1-USD", "2015-01-01")
-df1 = yf.download("KSM-USD", "2015-01-01")
-new  = ((df1/df)*100).dropna()
-new
-RR = RiskRange(new)
-KSM = RiskRange(df1)
-KSM
-
-
 def RiskRange(Price_Data, window=10, length=63, volume_weighted=True, vol_window=5, mindiff=100000000.0, maxdiff=-100000000.0):
     """
     Function to Calculate Risk Ranges
