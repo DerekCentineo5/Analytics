@@ -17,6 +17,15 @@ from pandas_ta.overlap import wma
 import ta
 import numpy as np
 
+df = yf.download("DOT1-USD", "2015-01-01")
+df1 = yf.download("KSM-USD", "2015-01-01")
+new  = ((df1/df)*100).dropna()
+new
+RR = RiskRange(new)
+KSM = RiskRange(df1)
+KSM
+
+
 def RiskRange(Price_Data, window=10, length=63, volume_weighted=True, vol_window=5, mindiff=100000000.0, maxdiff=-100000000.0):
     """
     Function to Calculate Risk Ranges
@@ -101,22 +110,32 @@ def app():
         start_date = st.sidebar.text_input("Start Date", "2018-01-01")
         end_date = st.sidebar.text_input("End Date", (dt.datetime.today() + dt.timedelta(days=1)).strftime("%Y-%m-%d"))
         stock_symbol = st.sidebar.text_input("Yahoo Finance Symbol", "QQQ")
+        spread = st.sidebar.selectbox("Pair or Ratio?", (True, False))
+        stock_symbol_for_ratio = st.sidebar.text_input("Symbol for Pair", "SPY")
         volume_weighted = st.sidebar.selectbox("Volume Weighted", (True, False))
         trade_period = st.sidebar.slider("Trade Period", min_value=2, max_value=21,value=10, step=1)
         trend_period = st.sidebar.slider("Trend Period", min_value=21, max_value=130,value=63, step=1)
 
-        return start_date, end_date, stock_symbol, volume_weighted, trade_period, trend_period
+        return start_date, end_date, stock_symbol, spread, stock_symbol_for_ratio, volume_weighted, trade_period, trend_period
 
-    def get_data(symbol, Start, End):
+    def get_data(symbol, Spread, symbol2, Start, End):
+        
+        if Spread==False:
 
-        Data = yf.download(symbol, start=Start, end=End)
+            Data = yf.download(symbol, start=Start, end=End)
+        
+        elif Spread==True:
 
+            df = yf.download(symbol, start=Start, end=End)
+            df2 = yf.download(symbol2, start=Start, end=End)
+            Data = ((df/df2)*100).dropna()
+        
         return Data
 
     #Get Data
-    start, end, symbol, vw, trade, trend = get_input()
+    start, end, symbol, spread, symbol_for_spread, vw, trade, trend = get_input()
 
-    Data = get_data(symbol=symbol, Start=start, End=end)
+    Data = get_data(symbol=symbol, Spread=spread, symbol2=symbol_for_spread, Start=start, End=end)
 
     #Calculate Risk Ranges
     RR = RiskRange(Price_Data=Data, window=trade, length=trend, volume_weighted=vw, vol_window=trade)

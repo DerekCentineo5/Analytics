@@ -107,7 +107,7 @@ def app():
 
         st.header("Rising Trends")
         st.dataframe(RISING)
-
+        
 #############################
 #connection = sqlite3.connect(config.DB_FILE)
 
