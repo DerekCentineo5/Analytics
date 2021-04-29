@@ -138,8 +138,13 @@ def app():
     ############################################################ Display ############################################################
 
     Company_Name = yf.Ticker(symbol).info['shortName']
+    Ticker1 = yf.Ticker(symbol)
+    Ticker2 = yf.Ticker(symbol_for_spread)
 
-    st.header(Company_Name +" Risk Ranges\n")
+    if spread==False:
+        st.header(Company_Name +" Risk Ranges\n")
+    elif spread==True:
+        st.header(Ticker1+"/"+Ticker2 "Ratio Analysis")
 
     fig = go.Figure(data=go.Scatter(x=RR.index, y=RR['Trend'], name="Trend"))
 
