@@ -1,66 +1,56 @@
-from psaw import PushshiftAPI
 import config
-import sqlite3
 import datetime
+import sqlite3
+import config
+import streamlit as st
 import pandas as pd
+from psaw import PushshiftAPI
 
-connection = sqlite3.connect(config.DB_FILE)
+def app():
 
-connection.row_factory = sqlite3.Row
+    connection = sqlite3.connect(config.DB_FILE)
 
-cursor = connection.cursor()
+    connection.row_factory = sqlite3.Row
 
-cursor.execute("""
-    SELECT id, symbol, name FROM stock
-""")
+    cursor = connection.cursor()
 
-rows = cursor.fetchall()
+    cursor.execute("""
+        SELECT * FROM stock
+    """)
+    rows = cursor.fetchall()
 
-stocks = {}
-for row in rows: 
-    stocks['$' + row['symbol']] = row['id']
+    stocks = {}
+    for row in rows: 
+        stocks['$' + row['symbol']] = row['id']
 
-stocks
+    symbols = {}
+    for row in rows:
+        symbols['$' + row['symbol']] = row['symbol']
 
+    api = PushshiftAPI()
 
-api = PushshiftAPI()
+    def get_intput():
 
-start_time = int(datetime.datetime(2021, 4, 24).timestamp())
+        start_date = st.sidebar.text_input("Start Date", (dt.datetime.today() - dt.timedelta(days=30)).strftime("%Y-%m-%d"))
+        end_date = st.sidebar.text_input("End Date", dt.datetime.today().strftime("%Y-%m-%d"))
 
-submissions = api.search_submissions(after=start_time,
-                                     subreddit='wallstreetbets',
-                                     filter=['url','author', 'title', 'subreddit'])
+        return start_date, end_date
+    
+    def get_data(start, end):
 
-### CREATE TABLE AND BAR CHART TO COUNT MENTIONS                                    
-                                     
-for submission in submissions:
-    words = submission.title.split()
-    cashtags = list(set(filter(lambda word: word.lower().startswith('$'), words)))
+        df = cursor.execute("""
+        SELECT * FROM mention""")
 
-    if len(cashtags) > 0:
-        print(cashtags)
-        print(submission.title)
+        DF = pd.DataFrame(df, columns = ['stock_id', 'symbol', 'date', 'message', 'source', 'url'])
+        DF['date'] = pd.to_datetime(DF['date'])  
+        mask = (DF['date'] > start) & (DF['date'] <= end)
+        DF = DF.loc[mask]
+        Counts = pd.DataFrame(DF['symbol'].value_counts())
 
-        for cashtag in cashtags:
-            if cashtag in stocks:
-                submitted_time = datetime.datetime.fromtimestamp(submission.created_utc).isoformat()
+        return Counts
 
-                try:
-                    cursor.execute("""
-                        INSERT INTO mention (dt, stock_id, message, source, url)
-                        VALUES (?, ?, ?, 'wallstreetbets', ?)
-                    """, (submitted_time, stocks[cashtag], submission.title, submission.url))
-        
-                    connection.commit()
+    Start, End = get_intput()
 
-                except Exception as e:
-                    print(e)
-                    connection.rollback()
+    Data = get_data(start=Start, end=End)
 
-cursor.execute("""
-            INSERT INTO Reddit
-	        SELECT count(*) as num_mentions, stock_id, symbol, message
-	        FROM mention join stock on stock.id = mention.stock_id
-	        group by stock_id, symbol
-	        order by num_mentions DESC
-""")
+    st.write(Data)
