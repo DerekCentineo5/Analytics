@@ -1,11 +1,9 @@
 import config
 import datetime
 import sqlite3
-import psaw
 import config
 import streamlit as st
 import pandas as pd
-from psaw import PushshiftAPI
 
 def app():
 
@@ -14,21 +12,6 @@ def app():
     connection.row_factory = sqlite3.Row
 
     cursor = connection.cursor()
-
-    cursor.execute("""
-        SELECT * FROM stock
-    """)
-    rows = cursor.fetchall()
-
-    stocks = {}
-    for row in rows: 
-        stocks['$' + row['symbol']] = row['id']
-
-    symbols = {}
-    for row in rows:
-        symbols['$' + row['symbol']] = row['symbol']
-
-    api = PushshiftAPI()
 
     def get_intput():
 

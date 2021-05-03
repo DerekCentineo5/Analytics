@@ -2,7 +2,6 @@ numpy
 ta
 plotly
 streamlit
-psaw
 pandas_ta
 yfinance
 datetime
