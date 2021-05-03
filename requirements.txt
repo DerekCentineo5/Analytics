@@ -2,8 +2,8 @@ numpy
 ta
 plotly
 streamlit
+psaw
 pandas_ta
-pytrends==4.7.3
 yfinance
 datetime
 pandas_ta
