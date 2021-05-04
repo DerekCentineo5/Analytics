@@ -18,7 +18,7 @@ def app():
     
     def get_data(start, end):
 
-        connection = sqlite3.connect('C:/Users/derekcentineo/Documents/GitHub/Analytics/app.db')
+        connection = sqlite3.connect('/Users/derekcentineo/Documents/GitHub/Analytics/app.db')
 
         connection.row_factory = sqlite3.Row
 
