@@ -2,6 +2,7 @@ numpy
 ta
 plotly
 streamlit
+pytrends
 pandas_ta
 yfinance
 datetime

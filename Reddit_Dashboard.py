@@ -1,6 +1,7 @@
 import config
 import datetime
 import sqlite3
+import plotly.graph_objects as go
 import datetime as dt
 import config
 import streamlit as st
@@ -38,5 +39,12 @@ def app():
     Start, End = get_intput()
 
     Data = get_data(start=Start, end=End)
+
+    fig = go.Figure(data=go.Bar(x=Data.index, y=Data['symbol'], name="Wallstreetbets Most Mentioned"))
+    fig.update_layout(
+            xaxis=dict(title="Ticker"),
+            yaxis=dict(title="Mentions"),
+            )
+    st.plotly_chart(fig, use_container_width=True)
 
     st.write(Data)
