@@ -30,7 +30,7 @@ def app():
 
         DF = pd.DataFrame(df, columns = ['stock_id', 'symbol', 'date', 'message', 'source', 'url'])
         DF['date'] = pd.to_datetime(DF['date'])  
-        mask = (DF['date'] > start) & (DF['date'] <= end)
+        mask = (DF['date'] >= start) & (DF['date'] <= end)
         DF = DF.loc[mask]
         Counts = pd.DataFrame(DF['symbol'].value_counts())
 
