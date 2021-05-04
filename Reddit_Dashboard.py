@@ -9,12 +9,6 @@ import pandas as pd
 
 def app():
 
-    connection = sqlite3.connect('app.db')
-
-    connection.row_factory = sqlite3.Row
-
-    cursor = connection.cursor()
-
     def get_intput():
 
         start_date = st.sidebar.text_input("Start Date", (dt.datetime.today() - dt.timedelta(days=30)).strftime("%Y-%m-%d"))
@@ -23,6 +17,12 @@ def app():
         return start_date, end_date
     
     def get_data(start, end):
+
+        connection = sqlite3.connect('app.db')
+
+        connection.row_factory = sqlite3.Row
+
+        cursor = connection.cursor()
 
         df = cursor.execute("""
         SELECT * FROM mention
