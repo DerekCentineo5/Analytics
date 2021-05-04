@@ -2,11 +2,11 @@ numpy
 ta
 plotly
 streamlit
-sqlite3
 pytrends
 pandas_ta
 yfinance
 datetime
+streamlit
 pandas_ta
 alpaca_trade_api
 
