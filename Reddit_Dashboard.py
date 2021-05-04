@@ -24,7 +24,8 @@ def app():
     def get_data(start, end):
 
         df = cursor.execute("""
-        SELECT * FROM mention""")
+        SELECT * FROM mention
+        """)
 
         DF = pd.DataFrame(df, columns = ['stock_id', 'symbol', 'date', 'message', 'source', 'url'])
         DF['date'] = pd.to_datetime(DF['date'])  
