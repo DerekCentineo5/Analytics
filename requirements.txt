@@ -6,7 +6,7 @@ pytrends
 pandas_ta
 yfinance
 datetime
-streamlit
+sqlite3
 pandas_ta
 alpaca_trade_api
 
