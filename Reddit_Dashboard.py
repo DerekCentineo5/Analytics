@@ -1,14 +1,13 @@
 import config
 import datetime
 import sqlite3
-
 import config
 import streamlit as st
 import pandas as pd
 
 def app():
 
-    connection = sqlite3.connect('app.db')
+    connection = sqlite3.connect('/Users/derekcentineo/Documents/GitHub/Analytics/app.db')
 
     connection.row_factory = sqlite3.Row
 
