@@ -8,3 +8,4 @@ datetime
 pandas_ta
 alpaca_trade_api
 sqlite3
+pathlib

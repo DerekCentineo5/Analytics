@@ -1,11 +1,11 @@
 import config
 import datetime
 import sqlite3
-import tempfile
 import datetime as dt
 import config
 import streamlit as st
 import pandas as pd
+import pathlib
 
 def app():
 
@@ -18,7 +18,9 @@ def app():
     
     def get_data(start, end):
 
-        connection = sqlite3.connect('/Users/derekcentineo/Documents/GitHub/Analytics/app.db')
+        fp = pathlib.Path("/Users/derekcentineo/Documents/GitHub/Analytics/app.db")
+
+        connection = sqlite3.connect(str(fp))
 
         connection.row_factory = sqlite3.Row
 
