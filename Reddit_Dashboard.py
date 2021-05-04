@@ -18,9 +18,7 @@ def app():
     
     def get_data(start, end):
 
-        fp = pathlib.Path("/Users/derekcentineo/Documents/GitHub/Analytics/app.db")
-
-        connection = sqlite3.connect(str(fp))
+        connection = sqlite3.connect()
 
         connection.row_factory = sqlite3.Row
 
