@@ -1,14 +1,17 @@
 import config
 import datetime
 import sqlite3
+import tempfile
 import datetime as dt
 import config
 import streamlit as st
 import pandas as pd
+st.file_uploader()
+
 
 def app():
 
-    connection = sqlite3.connect('C://Users/derekcentineo/Documents/GitHub/Analytics/app.db')
+    connection = sqlite3.connect('app.db')
 
     connection.row_factory = sqlite3.Row
 
