@@ -5,7 +5,6 @@ import datetime as dt
 import config
 import streamlit as st
 import pandas as pd
-import pathlib
 
 def app():
 
