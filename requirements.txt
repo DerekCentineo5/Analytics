@@ -1,8 +1,8 @@
+sqlite3
 numpy
 ta
 plotly
 streamlit
-sqlite3
 pytrends
 pandas_ta
 yfinance
