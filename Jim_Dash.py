@@ -209,4 +209,4 @@ def app():
 
     st.header("Risk Ranges")
 
-    st.dataframe(Data.style.applymap(highlight_data))
+    st.dataframe(Data.style.apply(highlight_data))
