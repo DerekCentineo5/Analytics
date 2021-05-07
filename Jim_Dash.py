@@ -93,7 +93,7 @@ def app():
 
     def highlight_data(val):
 
-        return ['background-color: green']*len(val) if val.Signal=="BULLISH" else ['background-color: red']*len(val)
+        return ['background-color: green']*len(val) if val['Signal']=="BULLISH" else ['background-color: red']*len(val)
 
         
     def get_input():
