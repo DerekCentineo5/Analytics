@@ -11,7 +11,7 @@ def app():
 
     def get_intput():
 
-        start_date = st.sidebar.text_input("Start Date", (dt.datetime.today() - dt.timedelta(days=30)).strftime("%Y-%m-%d"))
+        start_date = st.sidebar.text_input("Start Date", ((dt.datetime.today() + dt.timedelta(days=1)) - dt.timedelta(days=1)).strftime("%Y-%m-%d"))
         end_date = st.sidebar.text_input("End Date", dt.datetime.today().strftime("%Y-%m-%d"))
 
         return start_date, end_date
