@@ -189,7 +189,9 @@ def app():
     start, end, index, vw, trade, trend = get_input()
 
     Data = get_data(symbol=index, Start=start, End=end, Trade=trade, Trend=trend, VW=vw)
-    Data
+
+    Data['Signal'] = np.where(Data["Bottom RR"] > Data["Trend"], "BULLISH", "BEARISH")
+        
 
     #Calculate Risk Ranges
     
