@@ -1,7 +1,6 @@
 numpy
 ta
 plotly
-portfoliolab
 streamlit
 pytrends
 pandas_ta

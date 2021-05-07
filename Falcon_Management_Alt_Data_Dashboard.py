@@ -1,6 +1,5 @@
 import os
 import sys
-import Momentum
 import Jim_Dash
 import Alpaca_Feed
 import Trends
@@ -13,7 +12,6 @@ PAGES = {
     "Daily Ranges": Jim_Dash,
     "Risk Ranges Analysis": Falcon_Management_Ranges,
     "Algorithm": Alpaca_Feed,
-    "Momentum": Momentum,
     "Reddit Tracker": Reddit_Dashboard,
     "Google Trends": Trends
 }
