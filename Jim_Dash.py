@@ -91,8 +91,11 @@ def app():
 
     # Get User Input
 
-    #### MAYBE ADD IN SOURCE OPTION?????
+    def highlight_data(val):
 
+        return ['background-color: green']*len(val) if val.Signal=="BULLISH" else ['background-color: red']*len(val)
+
+        
     def get_input():
 
         start_date = st.sidebar.text_input("Start Date", "2018-01-01")
@@ -191,6 +194,7 @@ def app():
     Data = get_data(symbol=index, Start=start, End=end, Trade=trade, Trend=trend, VW=vw)
 
     Data['Signal'] = np.where(Data["Bottom RR"] > Data["Trend"], "BULLISH", "BEARISH")
+
         
 
     #Calculate Risk Ranges
@@ -203,4 +207,4 @@ def app():
 
     st.header("Risk Ranges")
 
-    st.dataframe(Data)
+    st.dataframe(Data.style.applymap(highlight_data, axis=1))
