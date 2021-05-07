@@ -95,7 +95,7 @@ def app():
 
         bullish = 'BULLISH'
 
-        return ['background-color: green']*len(val) if val.Signal == bullish else ['background-color: red']*len(val)
+        return ['background-color: lightgreen']*len(val) if val.Signal == bullish else ['background-color: red']*len(val)
 
         
     def get_input():
