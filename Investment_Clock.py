@@ -6,7 +6,7 @@ from plotly.subplots import make_subplots
 Data = pd.read_csv('Productivity Data.csv', index_col=0,parse_dates=True)
 Data
 
-fig = go.Figure(data=go.Scatter(x=Data['Inflation'], y=Data['Productivity'], text = Data.index, mode = 'markers',name="Investment Clock"))
+fig = go.Figure(data=go.Scatter(x=Data['10YR_1st_Diff'], y=Data['Productivity(YoY)_1st_Diff'], text = Data.index, mode = 'markers',name="Investment Clock"))
 fig.show()
 
 
