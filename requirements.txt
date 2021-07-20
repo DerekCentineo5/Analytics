@@ -1,6 +1,6 @@
 numpy
 ta
-plotly
+plotly==0.80.0
 streamlit
 pytrends
 pandas_ta
