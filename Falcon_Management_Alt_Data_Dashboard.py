@@ -12,8 +12,6 @@ PAGES = {
     "Daily Ranges": Jim_Dash,
     "Risk Ranges Analysis": Falcon_Management_Ranges,
     "Algorithm": Alpaca_Feed,
-    "Reddit Tracker": Reddit_Dashboard,
-    "Google Trends": Trends
 }
 
 Falcon = Image.open("Falcon.jpeg")
@@ -23,5 +21,9 @@ selection = st.sidebar.radio("Go to", list(PAGES.keys()))
 page = PAGES[selection]
 page.app()
 
+""""
 
+"Reddit Tracker": Reddit_Dashboard,
+"Google Trends": Trends
 
+"""
