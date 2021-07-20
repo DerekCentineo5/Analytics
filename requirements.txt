@@ -1,7 +1,7 @@
 numpy
 ta
-plotly==0.80.0
-streamlit
+plotly
+streamlit==0.80.0
 pytrends
 pandas_ta
 yfinance
