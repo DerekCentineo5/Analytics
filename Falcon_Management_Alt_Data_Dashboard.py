@@ -20,10 +20,3 @@ st.sidebar.title('Dashboard Navigation')
 selection = st.sidebar.radio("Go to", list(PAGES.keys()))
 page = PAGES[selection]
 page.app()
-
-""""
-
-"Reddit Tracker": Reddit_Dashboard,
-"Google Trends": Trends
-
-"""
